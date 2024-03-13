@@ -1,7 +1,7 @@
 - name: Getting started
   href: index.md
   items:
-  - name: Register your app with Azure AD
+  - name: Register your app with Microsoft Entra ID
     href: /azure/active-directory/develop/active-directory-integrating-applications
   - name: Client applications
     href: getting-started/client-applications.md
@@ -18,7 +18,7 @@
     href: /azure/active-directory/develop/msal-logging-python
   - name: Handle errors and exceptions
     href: /azure/active-directory/develop/msal-error-handling-python
-  - name: Conditional access
+  - name: Conditional Access
     href: advanced/conditional-access.md
   - name: Token cache serialization
     href: /azure/active-directory/develop/msal-python-token-cache-serialization
@@ -49,7 +49,7 @@
   items:
   - name: Releases
     href: https://github.com/AzureAD/microsoft-authentication-library-for-python/releases
-  - name: Azure AD Developer Guide
+  - name: Microsoft Entra Developer Guide
     href: https://aka.ms/aaddevv2
   - name: Code samples
     href: /azure/active-directory/develop/sample-v2-code

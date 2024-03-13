@@ -15,9 +15,9 @@ In general Microsoft does not advise customers to use it as it's less secure tha
 
 * By design and policy, the username/password authentication works only for Work and school accounts, but not for Microsoft Accounts (MSA).
   See the [definition of these 2 types of accounts here](/azure/active-directory/fundamentals/sign-up-organization).
-* The Username/Password authentication is not compatible with conditional access and multi-factor authentication,
-  because this is not an interactive flow, the Microsoft Identity platform does not have an opportunity to present a web-based dialog for the end user to interact.
-  As a consequence, if your app runs in an Azure AD tenant where the tenant admin requires multi-factor authentication (many organizations do that), this flow will not work.
+* The Username/Password authentication is not compatible with Conditional Access and multi-factor authentication,
+  because this is not an interactive flow, the Microsoft identity platform does not have an opportunity to present a web-based dialog for the end user to interact.
+  As a consequence, if your app runs in a Microsoft Entra tenant where the tenant admin requires multi-factor authentication (many organizations do that), this flow will not work.
 * Because Username Password Authentication is a non-interactive flow:
   - the user of your application must have previously consented to use the application 
   - or the tenant admin must have previously consented to all users in the tenant to use the application.

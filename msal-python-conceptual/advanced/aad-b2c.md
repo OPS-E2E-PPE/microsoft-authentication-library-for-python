@@ -9,7 +9,7 @@ description: "You can use MSAL Python to sign-in users with social identities, a
 
 You can use MSAL Python to sign-in users with social identities, acquire tokens, and customize the sign-in experience by using [Azure AD B2C](https://aka.ms/aadb2c).
 
-AAD B2C is built around the notion of [User Flows](/azure/active-directory-b2c/active-directory-b2c-reference-policies) (formerly known as policies). In MSAL Python, specifying a user flow translates to providing an authority.
+Azure AD B2C is built around the notion of [User Flows](/azure/active-directory-b2c/active-directory-b2c-reference-policies) (formerly known as policies). In MSAL Python, specifying a user flow translates to providing an authority.
 
 * When you instantiate the client application, you need to specify the user flow in authority as
   `https://{tenant_name}.b2clogin.com/{tenant_name}.onmicrosoft.com/{user_flow}`.
@@ -62,7 +62,7 @@ app.acquire_token_by_xyz(...)  # Same as in non-B2C scenarios
 
 > There is no need to filter accounts by user flow,
 as long as you are following a pattern of
-"create different msal app for different user flow"
+"create different MSAL app for different user flow"
 (because the B2C user flow is designed to behave like an isolated authority).
 In practice, you will still typically reuse same MSAL app and its token cache for the SignIn user flow,
 and only create new one-time MSAL app when invoking EditProfile or ResetPassword user flows,
@@ -97,7 +97,7 @@ The following content serves as a mini-tutorial.
 * In your AzureAD B2C tenant, create a new user flow and select **Sign in using ROPC**.
 This will enable the ROPC user flow for your tenant.
 See [Configure the resource owner password credentials flow](/azure/active-directory-b2c/configure-ropc) for more details.
-* Once you create the msal instance with the authority which contains the ROPC user flow,
+* Once you create the MSAL instance with the authority which contains the ROPC user flow,
 the [`acquire_token_by_username_password(...)`](https://msal-python.readthedocs.io/en/latest/#msal.PublicClientApplication.acquire_token_by_username_password)
 would work as usual.
 * Limitations: This **only works for local accounts** (where you register with B2C using an email or username). This flow does not work if federating to any of the IdPs supported by B2C (Facebook, Google, etc...).
