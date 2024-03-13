@@ -1,6 +1,15 @@
 ---
 title: Best practices for a robust enterprise ready application
 description: "You've seen that with MSAL Python you can quite simply acquire a token for a protected Web API. You also don't have to handle refreshing tokens yourself. However, to build robust, enterprise ready applications, you will need to do a bit more."
+author: Dickson-Mwendia
+manager: CelesteDG
+
+ms.service: msal
+ms.subservice: msal-python
+ms.topic: conceptual
+ms.date: 02/07/2024
+ms.author: dmwendia
+ms.reviewer: shermanouko, rayluo
 ---
 
 # Best practices for a robust enterprise ready application

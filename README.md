@@ -1,8 +1,8 @@
 # Microsoft Authentication Library (MSAL) for Python Documentation
 
-[![Validate content links](https://github.com/MicrosoftDocs/microsoft-authentication-library-for-python/actions/workflows/linkchecker.yml/badge.svg)](https://github.com/MicrosoftDocs/microsoft-authentication-library-for-python/actions/workflows/linkchecker.yml)
+[![Validate existing links](https://github.com/MicrosoftDocs/microsoft-authentication-library-for-python/actions/workflows/linkvalidator.yml/badge.svg)](https://github.com/MicrosoftDocs/microsoft-authentication-library-for-python/actions/workflows/linkvalidator.yml)
 
-This is the documentation repository for Microsoft Authentication Library (MSAL) for .NET. If you are looking for the library, refer to [AzureAD/microsoft-authentication-library-for-python](https://github.com/AzureAD/microsoft-authentication-library-for-python).
+This is the documentation repository for Microsoft Authentication Library (MSAL) for Python. If you are looking for the library, refer to [AzureAD/microsoft-authentication-library-for-python](https://github.com/AzureAD/microsoft-authentication-library-for-python).
 
 ## Contributions
 

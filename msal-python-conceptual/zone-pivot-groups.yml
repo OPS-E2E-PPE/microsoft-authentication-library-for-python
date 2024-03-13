@@ -1,0 +1,15 @@
+### YamlMime:ZonePivotGroups
+groups:
+########### BEGIN 
+# Referenced by: msal/entra/python/*
+# Owner(s):  dmwendia, shermanouko
+## Acquire tokens
+- id: msal-python-acquire-token
+  title: msal-python-acquire-token
+  prompt: Choose an option
+  pivots:
+  - id: pca
+    title: Public client application
+  - id: cca
+    title: Confidential client application
+############ END 

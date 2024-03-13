@@ -5,4 +5,5 @@ fullName: msal
 type: import
 modules:
 - msal.application
+- msal.auth_scheme
 - msal.token_cache

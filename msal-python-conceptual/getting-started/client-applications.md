@@ -1,6 +1,15 @@
 ---
 title: Client applications
 description: "How to instantiate client applications in MSAL Python."
+author: Dickson-Mwendia
+manager: CelesteDG
+
+ms.service: msal
+ms.subservice: msal-python
+ms.topic: conceptual
+ms.date: 02/07/2024
+ms.author: dmwendia
+ms.reviewer: shermanouko, rayluo
 ---
 
 # Client applications

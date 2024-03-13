@@ -1,6 +1,15 @@
 ---
 title: Using MSAL Python with Web Account Manager
 description: "If you are building a Windows application, you might consider simplifying how users authenticate with the help of an authentication broker - the Web Account Manager."
+author: Dickson-Mwendia
+manager: CelesteDG
+
+ms.service: msal
+ms.subservice: msal-python
+ms.topic: conceptual
+ms.date: 02/07/2024
+ms.author: dmwendia
+ms.reviewer: shermanouko, rayluo
 ---
 
 # Using MSAL Python with Web Account Manager

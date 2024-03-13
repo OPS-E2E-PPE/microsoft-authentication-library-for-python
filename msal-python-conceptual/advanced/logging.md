@@ -1,6 +1,15 @@
 ---
 title: Logging
 description: "Logging in MSAL Python is designed to use the standard Python logging mechanisms, so all your previous knowledge of Python logging applies to MSAL Python."
+author: Dickson-Mwendia
+manager: CelesteDG
+
+ms.service: msal
+ms.subservice: msal-python
+ms.topic: conceptual
+ms.date: 02/07/2024
+ms.author: dmwendia
+ms.reviewer: shermanouko, rayluo
 ---
 
 # Logging

@@ -54,17 +54,13 @@
       ]
     },
     "fileMetadata": {
-      "author": {
-        "*.md": "localden",
-        "*/**.md": "localden"
-      },
-      "ms.author": {
-        "*.md": "ddelimarsky",
-        "*/**.md": "ddelimarsky"
-      },
       "ms.service": {
-        "*.md": "active-directory",
-        "*/**.md": "active-directory"
+        "*.md": "msal",
+        "*/**.md": "msal"
+      },
+      "ms.subservice": {
+        "*.md": "msal-python",
+        "*/**.md": "msal-python"
       },
       "titleSuffix": {
         "*.md": "Microsoft Authentication Library for Python",
