@@ -15,7 +15,8 @@ constructor:
   syntax: ClientApplication(client_id, client_credential=None, authority=None, validate_authority=True,
     token_cache=None, http_client=None, verify=True, proxies=None, timeout=None, client_claims=None,
     app_name=None, app_version=None, client_capabilities=None, azure_region=None,
-    exclude_scopes=None, http_cache=None, instance_discovery=None, allow_broker=None)
+    exclude_scopes=None, http_cache=None, instance_discovery=None, allow_broker=None,
+    enable_pii_log=None)
   parameters:
   - name: client_id
     description: Your app has a client_id after you register it on AAD.
@@ -29,31 +30,35 @@ constructor:
       \ in this form:\n\n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\"\
       : [], \"dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\"\
       : \"default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\n\
-      \   {\n       \"private_key\": \"...-----BEGIN PRIVATE KEY-----...\",\n    \
-      \   \"thumbprint\": \"A1B2C3D4E5F6...\",\n       \"public_certificate\": \"\
-      ...-----BEGIN CERTIFICATE-----... (Optional. See below.)\",\n       \"passphrase\"\
+      \   {\n       \"private_key\": \"...-----BEGIN PRIVATE KEY-----... in PEM format\"\
+      ,\n       \"thumbprint\": \"A1B2C3D4E5F6...\",\n       \"public_certificate\"\
+      : \"...-----BEGIN CERTIFICATE-----... (Optional. See below.)\",\n       \"passphrase\"\
       : \"Passphrase if the private_key is encrypted (Optional. Added in version 1.6.0)\"\
-      ,\n   }\n   ````\n\n*Added in version 0.5.0*:\npublic_certificate (optional)\
-      \ is public key certificate\nwhich will be sent through 'x5c' JWT header only\
-      \ for\nsubject name and issuer authentication to support cert auto rolls.\n\n\
-      Per [specs](https://tools.ietf.org/html/rfc7515#section-4.1.6),\n\"the certificate\
-      \ containing\nthe public key corresponding to the key used to digitally sign\
-      \ the\nJWS MUST be the first certificate.  This MAY be followed by\nadditional\
-      \ certificates, with each subsequent certificate being the\none used to certify\
-      \ the previous one.\"\nHowever, your certificate's issuer may use a different\
-      \ order.\nSo, if your attempt ends up with an error AADSTS700027 -\n\"The provided\
-      \ signature value did not match the expected signature value\",\nyou may try\
-      \ use only the leaf cert (in PEM/str format) instead.\n\n*Added in version 1.13.0*:\n\
-      It can also be a completely pre-signed assertion that you've assembled yourself.\n\
-      Simply pass a container containing only the key \"client_assertion\", like this:\n\
-      \n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\": [], \"dupnames\"\
-      : [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\": \"default\"\
-      , \"force\": false, \"linenos\": false} -->\n\n````default\n\n   {\n       \"\
-      client_assertion\": \"...a JWT with claims aud, exp, iss, jti, nbf, and sub...\"\
-      \n   }\n   ````"
+      ,\n   }\n   ````\n\nMSAL Python requires a \"private_key\" in PEM format.\n\
+      If your cert is in a PKCS12 (.pfx) format, you can also\n[convert it to PEM\
+      \ and get the thumbprint](https://github.com/Azure/azure-sdk-for-python/blob/07d10639d7e47f4852eaeb74aef5d569db499d6e/sdk/identity/azure-identity/azure/identity/_credentials/certificate.py#L101-L123).\n\
+      \nThe thumbprint is available in your app's registration in Azure Portal.\n\
+      Alternatively, you can [calculate the thumbprint](https://github.com/Azure/azure-sdk-for-python/blob/07d10639d7e47f4852eaeb74aef5d569db499d6e/sdk/identity/azure-identity/azure/identity/_credentials/certificate.py#L94-L97).\n\
+      \n*Added in version 0.5.0*:\npublic_certificate (optional) is public key certificate\n\
+      which will be sent through 'x5c' JWT header only for\nsubject name and issuer\
+      \ authentication to support cert auto rolls.\n\nPer [specs](https://tools.ietf.org/html/rfc7515#section-4.1.6),\n\
+      \"the certificate containing\nthe public key corresponding to the key used to\
+      \ digitally sign the\nJWS MUST be the first certificate.  This MAY be followed\
+      \ by\nadditional certificates, with each subsequent certificate being the\n\
+      one used to certify the previous one.\"\nHowever, your certificate's issuer\
+      \ may use a different order.\nSo, if your attempt ends up with an error AADSTS700027\
+      \ -\n\"The provided signature value did not match the expected signature value\"\
+      ,\nyou may try use only the leaf cert (in PEM/str format) instead.\n\n*Added\
+      \ in version 1.13.0*:\nIt can also be a completely pre-signed assertion that\
+      \ you've assembled yourself.\nSimply pass a container containing only the key\
+      \ \"client_assertion\", like this:\n\n<!-- literal_block {\"ids\": [], \"classes\"\
+      : [], \"names\": [], \"dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\"\
+      , \"language\": \"default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\
+      \n   {\n       \"client_assertion\": \"...a JWT with claims aud, exp, iss, jti,\
+      \ nbf, and sub...\"\n   }\n   ````"
     defaultValue: None
     types:
-    - <xref:Union>[<xref:str>, <xref:dict>]
+    - <xref:typing.Union>[<xref:str>, <xref:dict>]
   - name: client_claims
     description: "*Added in version 0.5.0*:\nIt is a dictionary of extra claims that\
       \ would be signed by\nby this <xref:msal.application.ConfidentialClientApplication>\
@@ -91,11 +96,11 @@ constructor:
     defaultValue: 'True'
     types:
     - <xref:bool>
-  - name: cache
+  - name: token_cache
     description: 'Sets the token cache used by this ClientApplication instance.
 
       By default, an in-memory cache will be created and used.'
-    isRequired: true
+    defaultValue: None
     types:
     - <xref:msal.token_cache.TokenCache>
   - name: http_client
@@ -190,29 +195,17 @@ constructor:
     types:
     - <xref:list>[<xref:str>]
   - name: azure_region
-    description: "AAD provides regional endpoints for apps to opt in\nto keep their\
-      \ traffic remain inside that region.\n\nAs of 2021 May, regional service is\
-      \ only available for\n`acquire_token_for_client()` sent by any of the following\
-      \ scenarios:\n\n1. An app powered by a capable MSAL (MSAL Python 1.12+ will\
-      \ be provisioned) \n\n2. An app with managed identity, which is formerly known\
-      \ as MSI. (However MSAL Python does not support managed identity, so this one\
-      \ does not apply.) \n\n3. An app authenticated by [Subject Name/Issuer (SNI)](https://github.com/AzureAD/microsoft-authentication-library-for-python/issues/60).\
-      \ \n\n4. An app which already onboard to the region's allow-list. \n\nThis parameter\
-      \ defaults to None, which means region behavior remains off.\n\nApp developer\
-      \ can opt in to a regional endpoint,\nby provide its region name, such as \"\
-      westus\", \"eastus2\".\nYou can find a full list of regions by running\n`az\
-      \ account list-locations -o table`, or referencing to\n[this doc](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.resourcemanager.fluent.core.region?view=azure-dotnet).\n\
-      \nAn app running inside Azure Functions and Azure VM can use a special keyword\n\
-      `ClientApplication.ATTEMPT_REGION_DISCOVERY` to auto-detect region.\n\n\n> [!NOTE]\n\
-      > Setting azure_region to non-None for an app running\n>\n> outside of Azure\
-      \ Function/VM could hang indefinitely.\n>\n> \n>\n> You should consider opting\
-      \ in/out region behavior on-demand,\n>\n> by loading azure_region=None or azure_region=\"\
-      westus\"\n>\n> or azure_region=True (which means opt-in and auto-detect)\n>\n\
-      > from your per-deployment configuration, and then do\n>\n> app = ConfidentialClientApplication(...,\
-      \ azure_region=azure_region).\n>\n> \n>\n> Alternatively, you can configure\
-      \ a short timeout,\n>\n> or provide a custom http_client which has a short timeout.\n\
-      >\n> That way, the latency would be under your control,\n>\n> but still less\
-      \ performant than opting out of region feature.\n>\n\nNew in version 1.12.0."
+    description: "(optional)\nInstructs MSAL to use the Entra regional token service.\
+      \ This legacy feature is only available to\nfirst-party applications. Only `acquire_token_for_client()`\
+      \ is supported.\n\nSupports 3 values:\n\n   `azure_region=None` - meaning no\
+      \ region is used. This is the default value.\n   `azure_region=\"some_region\"\
+      ` - meaning the specified region is used.\n   `azure_region=True` - meaning\
+      \ MSAL will try to auto-detect the region. This is not recommended.\n\n\n> [!NOTE]\n\
+      > Region auto-discovery has been tested on VMs and on Azure Functions. It is\
+      \ unreliable.\n>\n> Applications using this option should configure a short\
+      \ timeout.\n>\n> \n>\n> For more details and for the values of the region string\n\
+      >\n> \n>\n> see [https://learn.microsoft.com/entra/msal/dotnet/resources/region-discovery-troubleshooting](https://learn.microsoft.com/entra/msal/dotnet/resources/region-discovery-troubleshooting)\n\
+      >\n\nNew in version 1.12.0."
     defaultValue: None
     types:
     - <xref:str>
@@ -289,34 +282,22 @@ constructor:
     types:
     - <xref:boolean>
   - name: allow_broker
-    description: "This parameter is NOT applicable to <xref:msal.application.ConfidentialClientApplication>.\n\
-      \nA broker is a component installed on your device.\nBroker implicitly gives\
-      \ your device an identity. By using a broker,\nyour device becomes a factor\
-      \ that can satisfy MFA (Multi-factor authentication).\nThis factor would become\
-      \ mandatory\nif a tenant's admin enables a corresponding Conditional Access\
-      \ (CA) policy.\nThe broker's presence allows Microsoft identity platform\nto\
-      \ have higher confidence that the tokens are being issued to your device,\n\
-      and that is more secure.\n\nAn additional benefit of broker is,\nit runs as\
-      \ a long-lived process with your device's OS,\nand maintains its own cache,\n\
-      so that your broker-enabled apps (even a CLI)\ncould automatically SSO from\
-      \ a previously established signed-in session.\n\nThis parameter defaults to\
-      \ None, which means MSAL will not utilize a broker.\nIf this parameter is set\
-      \ to True,\nMSAL will use the broker whenever possible,\nand automatically fall\
-      \ back to non-broker behavior.\nThat also means your app does not need to enable\
-      \ broker conditionally,\nyou can always set allow_broker to True,\nas long as\
-      \ your app meets the following prerequisite:\n\n* Installed optional dependency,\
-      \ e.g. `pip install msal[broker]>=1.20,<2`. (Note that broker is currently only\
-      \ available on Windows 10+) \n\n* Register a new redirect_uri for your desktop\
-      \ app as: `ms-appx-web://Microsoft.AAD.BrokerPlugin/your_client_id` \n\n* Tested\
-      \ your app in following scenarios: \n\n  * Windows 10+ \n\n  * PublicClientApplication's\
-      \ following methods:: acquire_token_interactive(), acquire_token_by_username_password(),\
-      \ acquire_token_silent() (or acquire_token_silent_with_error()). \n\n  * AAD\
-      \ and MSA accounts (i.e. Non-ADFS, non-B2C) \n\nNew in version 1.20.0."
+    description: Deprecated. Please use `enable_broker_on_windows` instead.
     defaultValue: None
     types:
     - <xref:boolean>
-  - name: token_cache
+  - name: enable_pii_log
+    description: 'When enabled, logs may include PII (Personal Identifiable Information).
+
+      This can be useful in troubleshooting broker behaviors.
+
+      The default behavior is False.
+
+
+      New in version 1.24.0.'
     defaultValue: None
+    types:
+    - <xref:boolean>
 methods:
 - uid: msal.application.ClientApplication.acquire_token_by_auth_code_flow
   name: acquire_token_by_auth_code_flow
@@ -501,7 +482,7 @@ methods:
 
     [https://github.com/AzureAD/microsoft-authentication-library-for-python/wiki/Username-Password-Authentication](https://github.com/AzureAD/microsoft-authentication-library-for-python/wiki/Username-Password-Authentication)'
   signature: acquire_token_by_username_password(username, password, scopes, claims_challenge=None,
-    **kwargs)
+    auth_scheme=None, **kwargs)
   parameters:
   - name: username
     description: Typically a UPN in the form of an email address.
@@ -530,6 +511,16 @@ methods:
       It is a string of a JSON object which contains lists of claims being requested
       from these locations.'
     defaultValue: None
+  - name: auth_scheme
+    description: 'You can provide an `msal.auth_scheme.PopAuthScheme` object
+
+      so that MSAL will get a Proof-of-Possession (POP) token for you.
+
+
+      New in version 1.26.0.'
+    defaultValue: None
+    types:
+    - <xref:object>
   return:
     description: "A dict representing the json response from AAD:\n\n* A successful\
       \ response would contain \"access_token\" key, \n\n* an error response would\
@@ -551,7 +542,7 @@ methods:
 
     token cache look-up, then this method is easier and recommended.'
   signature: acquire_token_silent(scopes, account, authority=None, force_refresh=False,
-    claims_challenge=None, **kwargs)
+    claims_challenge=None, auth_scheme=None, **kwargs)
   parameters:
   - name: scopes
     isRequired: true
@@ -562,6 +553,8 @@ methods:
   - name: force_refresh
     defaultValue: 'False'
   - name: claims_challenge
+    defaultValue: None
+  - name: auth_scheme
     defaultValue: None
   return:
     description: "* A dict containing no \"error\" key, and typically contains an\
@@ -588,7 +581,7 @@ methods:
     Otherwise, the other method <xref:msal.application.ClientApplication.acquire_token_silent>
     is recommended.'
   signature: acquire_token_silent_with_error(scopes, account, authority=None, force_refresh=False,
-    claims_challenge=None, **kwargs)
+    claims_challenge=None, auth_scheme=None, **kwargs)
   parameters:
   - name: scopes
     description: '(Required)
@@ -623,6 +616,16 @@ methods:
       It is a string of a JSON object which contains lists of claims being requested
       from these locations.'
     defaultValue: None
+  - name: auth_scheme
+    description: 'You can provide an `msal.auth_scheme.PopAuthScheme` object
+
+      so that MSAL will get a Proof-of-Possession (POP) token for you.
+
+
+      New in version 1.26.0.'
+    defaultValue: None
+    types:
+    - <xref:object>
   - name: authority
     defaultValue: None
   return:
@@ -693,13 +696,13 @@ methods:
     types:
     - <xref:str>
   - name: prompt
-    description: 'By default, no prompt value will be sent, not even "none".
+    description: 'By default, no prompt value will be sent, not even string `"none"`.
 
       You will have to specify a value explicitly.
 
-      Its valid values are defined in Open ID Connect specs
+      Its valid values are the constants defined in
 
-      [https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest)'
+      <xref:msal.Prompt>.'
     defaultValue: None
     types:
     - <xref:str>
@@ -771,13 +774,13 @@ methods:
     types:
     - <xref:str>
   - name: prompt
-    description: 'By default, no prompt value will be sent, not even "none".
+    description: 'By default, no prompt value will be sent, not even string `"none"`.
 
       You will have to specify a value explicitly.
 
-      Its valid values are defined in Open ID Connect specs
+      Its valid values are the constants defined in
 
-      [https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest)'
+      <xref:msal.Prompt>.'
     defaultValue: None
     types:
     - <xref:str>
@@ -866,6 +869,10 @@ methods:
       \n1. somehow store this content, typically inside the current session, \n\n\
       2. guide the end user (i.e. resource owner) to visit that auth_uri, \n\n3. and\
       \ then relay this dict and subsequent auth response to <xref:msal.application.ClientApplication.acquire_token_by_auth_code_flow>."
+- uid: msal.application.ClientApplication.is_pop_supported
+  name: is_pop_supported
+  summary: Returns True if this client supports Proof-of-Possession Access Token.
+  signature: is_pop_supported()
 - uid: msal.application.ClientApplication.remove_account
   name: remove_account
   summary: Sign me out and forget me from token cache

@@ -1,0 +1,42 @@
+### YamlMime:PythonClass
+uid: msal.auth_scheme.PopAuthScheme
+name: PopAuthScheme
+fullName: msal.auth_scheme.PopAuthScheme
+module: msal.auth_scheme
+inheritances:
+- builtins.object
+summary: Create an auth scheme which is needed to obtain a Proof-of-Possession token.
+constructor:
+  syntax: PopAuthScheme(http_method=None, url=None, nonce=None)
+  parameters:
+  - name: http_method
+    description: Its value is an uppercase http verb, such as "GET" and "POST".
+    defaultValue: None
+    types:
+    - <xref:str>
+  - name: url
+    description: The url to be signed.
+    defaultValue: None
+    types:
+    - <xref:str>
+  - name: nonce
+    description: The nonce came from resource's challenge.
+    defaultValue: None
+    types:
+    - <xref:str>
+attributes:
+- uid: msal.auth_scheme.PopAuthScheme.HTTP_DELETE
+  name: HTTP_DELETE
+  signature: HTTP_DELETE = 'DELETE'
+- uid: msal.auth_scheme.PopAuthScheme.HTTP_GET
+  name: HTTP_GET
+  signature: HTTP_GET = 'GET'
+- uid: msal.auth_scheme.PopAuthScheme.HTTP_PATCH
+  name: HTTP_PATCH
+  signature: HTTP_PATCH = 'PATCH'
+- uid: msal.auth_scheme.PopAuthScheme.HTTP_POST
+  name: HTTP_POST
+  signature: HTTP_POST = 'POST'
+- uid: msal.auth_scheme.PopAuthScheme.HTTP_PUT
+  name: HTTP_PUT
+  signature: HTTP_PUT = 'PUT'

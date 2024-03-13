@@ -1,6 +1,15 @@
 ---
 title: Instance metadata caching
 description: "Every developer wants their program to run faster. In this article, we are going to show you how you can add a one-liner to make your MSAL Python powered app to acquire a token roughly 1.5x to 2x faster!"
+author: Dickson-Mwendia
+manager: CelesteDG
+
+ms.service: msal
+ms.subservice: msal-python
+ms.topic: conceptual
+ms.date: 02/07/2024
+ms.author: dmwendia
+ms.reviewer: shermanouko, rayluo
 ---
 
 # Instance metadata caching

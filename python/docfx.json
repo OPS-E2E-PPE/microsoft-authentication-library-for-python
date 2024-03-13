@@ -74,8 +74,9 @@
     "globalMetadata": {
       "ms.topic": "reference",
       "ms.author": "dmwendia",
-      "manager": "dmwendia",
-      "ms.service": "active-directory",
+      "manager": "celesteDG",
+      "ms.service": "msal",
+      "ms.subservice": "msal-python",
       "apiPlatform": "python",
       "breadcrumb_path": "~/breadcrumb/toc.yml",
       "uhfHeaderId": "MSDocsHeader-Entra",

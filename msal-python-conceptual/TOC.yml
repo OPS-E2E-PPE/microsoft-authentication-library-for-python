@@ -1,11 +1,10 @@
-- name: Getting started
+- name: Overview of MSAL Python
   href: index.md
+- name: Get started
   items:
-  - name: Register your app with Azure AD
-    href: /azure/active-directory/develop/active-directory-integrating-applications
   - name: Client applications
     href: getting-started/client-applications.md
-  - name: Acquiring tokens
+  - name: Acquire tokens
     href: getting-started/acquiring-tokens.md
 
 - name: Advanced topics
@@ -13,31 +12,26 @@
   - name: Using MSAL Python with Web Account Manager
     href: advanced/wam.md
   - name: Migrate to MSAL Python
-    href: /azure/active-directory/develop/migrate-python-adal-msal
+    href: advanced/migrate-python-adal-msal.md
   - name: Logging
-    href: /azure/active-directory/develop/msal-logging-python
+    href: advanced/msal-logging-python.md
   - name: Handle errors and exceptions
-    href: /azure/active-directory/develop/msal-error-handling-python
+    href: advanced/msal-error-handling-python.md
   - name: Conditional access
     href: advanced/conditional-access.md
   - name: Token cache serialization
-    href: /azure/active-directory/develop/msal-python-token-cache-serialization
-  - name: Developing an Azure AD B2C app with MSAL Python
+    href: advanced/msal-python-token-cache-serialization.md
+  - name: Develop an Azure AD B2C app with MSAL Python
     href: advanced/aad-b2c.md
   - name: Active Directory Federation Services (ADFS) Support
-    href: /azure/active-directory/develop/msal-python-adfs-support
+    href: advanced/msal-python-adfs-support.md
   - name: National clouds
-    href: /azure/active-directory/develop/msal-national-cloud?tabs=python
   - name: Username and password authentication
     href: advanced/username-password-authentication.md
   - name: How to generate secret and/or certificate for Confidential Client
     href: advanced/client-credentials.md
   - name: Handle SameSite cookie changes in Chrome
     href: /azure/active-directory/develop/howto-handle-samesite-cookie-changes-chrome-browser?tabs=python
-  - name: Migrate existing refresh tokens into MSAL Python
-    href: advanced/migrate.md
-  - name: Logging
-    href: advanced/logging.md
   - name: Instance metadata caching
     href: advanced/instance-metadata-caching.md
   - name: Client capabilities
@@ -49,7 +43,7 @@
   items:
   - name: Releases
     href: https://github.com/AzureAD/microsoft-authentication-library-for-python/releases
-  - name: Azure AD Developer Guide
+  - name: Microsoft Entra Developer Guide
     href: https://aka.ms/aaddevv2
   - name: Code samples
     href: /azure/active-directory/develop/sample-v2-code

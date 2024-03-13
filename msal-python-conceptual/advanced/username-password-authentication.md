@@ -1,6 +1,15 @@
 ---
 title: Username and password authentication
 description: "By design and policy, the username/password authentication works only for Work and school accounts, but not for Microsoft Accounts (MSA)."
+author: Dickson-Mwendia
+manager: CelesteDG
+
+ms.service: msal
+ms.subservice: msal-python
+ms.topic: conceptual
+ms.date: 02/07/2024
+ms.author: dmwendia
+ms.reviewer: shermanouko, rayluo
 ---
 
 # Username and password authentication
@@ -16,8 +25,8 @@ In general Microsoft does not advise customers to use it as it's less secure tha
 * By design and policy, the username/password authentication works only for Work and school accounts, but not for Microsoft Accounts (MSA).
   See the [definition of these 2 types of accounts here](/azure/active-directory/fundamentals/sign-up-organization).
 * The Username/Password authentication is not compatible with conditional access and multi-factor authentication,
-  because this is not an interactive flow, the Microsoft Identity platform does not have an opportunity to present a web-based dialog for the end user to interact.
-  As a consequence, if your app runs in an Azure AD tenant where the tenant admin requires multi-factor authentication (many organizations do that), this flow will not work.
+  because this is not an interactive flow, the Microsoft identity platform does not have an opportunity to present a web-based dialog for the end user to interact.
+  As a consequence, if your app runs in a Microsoft Entra tenant where the tenant admin requires multi-factor authentication (many organizations do that), this flow will not work.
 * Because Username Password Authentication is a non-interactive flow:
   - the user of your application must have previously consented to use the application 
   - or the tenant admin must have previously consented to all users in the tenant to use the application.
@@ -33,7 +42,7 @@ Even if you choose to use Username Password Authentication, you should not persi
 
 ## Setup
 
-Microsoft identity platform supports username password flow on public client application only.
-So you would need to configure your app in this way. The follow screenshot is the panel from Azure Portal.
+Microsoft identity platform supports username password flow on public client application and Confidential client application.
+If you would need to configure your app as a public client application, turn on the switch on below screenshot to allow it.
 
 ![Public App Setup](https://user-images.githubusercontent.com/821550/76988648-4499c280-6902-11ea-8be5-00292624a274.png)

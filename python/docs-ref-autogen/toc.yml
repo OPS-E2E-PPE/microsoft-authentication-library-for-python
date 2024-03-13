@@ -13,6 +13,12 @@
     name: msal.application
   - items:
     - name: Overview
+      uid: msal.auth_scheme
+    - name: msal.auth_scheme.PopAuthScheme
+      uid: msal.auth_scheme.PopAuthScheme
+    name: msal.auth_scheme
+  - items:
+    - name: Overview
       uid: msal.token_cache
     - name: msal.token_cache.SerializableTokenCache
       uid: msal.token_cache.SerializableTokenCache

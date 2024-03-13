@@ -1,6 +1,15 @@
 ---
 title: Conditional access and claims challenges
 description: "When getting tokens silently, your application may receive errors when a Conditional Access claims challenge, such as MFA polic, is required by an API you're trying to access."
+author: Dickson-Mwendia
+manager: CelesteDG
+
+ms.service: msal
+ms.subservice: msal-python
+ms.topic: conceptual
+ms.date: 02/07/2024
+ms.author: dmwendia
+ms.reviewer: shermanouko, rayluo
 ---
 
 # Conditional access and claims challenges

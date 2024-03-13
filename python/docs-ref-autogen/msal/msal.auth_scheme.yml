@@ -1,0 +1,6 @@
+### YamlMime:PythonModule
+uid: msal.auth_scheme
+name: auth_scheme
+fullName: msal.auth_scheme
+classes:
+- msal.auth_scheme.PopAuthScheme
