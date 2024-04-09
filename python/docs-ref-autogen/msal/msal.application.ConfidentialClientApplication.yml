@@ -16,18 +16,19 @@ constructor:
     validate_authority=True, token_cache=None, http_client=None, verify=True, proxies=None,
     timeout=None, client_claims=None, app_name=None, app_version=None, client_capabilities=None,
     azure_region=None, exclude_scopes=None, http_cache=None, instance_discovery=None,
-    allow_broker=None, enable_pii_log=None)
+    allow_broker=None, enable_pii_log=None, oidc_authority=None)
   parameters:
   - name: client_id
-    description: Your app has a client_id after you register it on AAD.
+    description: Your app has a client_id after you register it on Microsoft Entra
+      admin center.
     isRequired: true
     types:
     - <xref:str>
   - name: client_credential
-    description: "For <xref:msal.application.PublicClientApplication>, you simply\
-      \ use *None* here.\nFor <xref:msal.application.ConfidentialClientApplication>,\n\
-      it can be a string containing client secret,\nor an X509 certificate container\
-      \ in this form:\n\n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\"\
+    description: "For <xref:msal.application.PublicClientApplication>, you use *None*\
+      \ here.\nFor <xref:msal.application.ConfidentialClientApplication>,\nit can\
+      \ be a string containing client secret,\nor an X509 certificate container in\
+      \ this form:\n\n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\"\
       : [], \"dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\"\
       : \"default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\n\
       \   {\n       \"private_key\": \"...-----BEGIN PRIVATE KEY-----... in PEM format\"\
@@ -298,6 +299,22 @@ constructor:
     defaultValue: None
     types:
     - <xref:boolean>
+  - name: oidc_authority
+    description: '*Added in version 1.28.0*:
+
+      It is a URL that identifies an OpenID Connect (OIDC) authority of
+
+      the format `https://contoso.com/tenant`.
+
+      MSAL will append ".well-known/openid-configuration" to the authority
+
+      and retrieve the OIDC metadata from there, to figure out the endpoints.
+
+
+      Note: Broker will NOT be used for OIDC authority.'
+    defaultValue: None
+    types:
+    - <xref:str>
 methods:
 - uid: msal.application.ConfidentialClientApplication.acquire_token_for_client
   name: acquire_token_for_client
@@ -329,9 +346,9 @@ methods:
       from these locations.'
     defaultValue: None
   return:
-    description: "A dict representing the json response from AAD:\n\n* A successful\
-      \ response would contain \"access_token\" key, \n\n* an error response would\
-      \ contain \"error\" and usually \"error_description\"."
+    description: "A dict representing the json response from Microsoft Entra:\n\n\
+      * A successful response would contain \"access_token\" key, \n\n* an error response\
+      \ would contain \"error\" and usually \"error_description\"."
 - uid: msal.application.ConfidentialClientApplication.acquire_token_on_behalf_of
   name: acquire_token_on_behalf_of
   summary: 'Acquires token using on-behalf-of (OBO) flow.
@@ -380,9 +397,9 @@ methods:
       from these locations.'
     defaultValue: None
   return:
-    description: "A dict representing the json response from AAD:\n\n* A successful\
-      \ response would contain \"access_token\" key, \n\n* an error response would\
-      \ contain \"error\" and usually \"error_description\"."
+    description: "A dict representing the json response from Microsoft Entra:\n\n\
+      * A successful response would contain \"access_token\" key, \n\n* an error response\
+      \ would contain \"error\" and usually \"error_description\"."
 - uid: msal.application.ConfidentialClientApplication.remove_tokens_for_client
   name: remove_tokens_for_client
   summary: 'Remove all tokens that were previously acquired via
