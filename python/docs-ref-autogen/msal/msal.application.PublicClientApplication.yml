@@ -54,6 +54,7 @@ constructor:
     types:
     - <xref:boolean>
   - name: client_id
+    isRequired: true
   - name: client_credential
     defaultValue: None
 methods:
@@ -86,9 +87,9 @@ methods:
       from these locations.'
     defaultValue: None
   return:
-    description: "A dict representing the json response from AAD:\n\n* A successful\
-      \ response would contain \"access_token\" key, \n\n* an error response would\
-      \ contain \"error\" and usually \"error_description\"."
+    description: "A dict representing the json response from Microsoft Entra:\n\n\
+      * A successful response would contain \"access_token\" key, \n\n* an error response\
+      \ would contain \"error\" and usually \"error_description\"."
 - uid: msal.application.PublicClientApplication.acquire_token_interactive
   name: acquire_token_interactive
   summary: 'Acquire token interactively i.e. via a local browser.
@@ -176,7 +177,8 @@ methods:
     types:
     - <xref:int>
   - name: extra_scopes_to_consent
-    description: '"Extra scopes to consent" is a concept only available in AAD.
+    description: '"Extra scopes to consent" is a concept only available in Microsoft
+      Entra.
 
       It refers to other resources you might want to prompt to consent for,
 
