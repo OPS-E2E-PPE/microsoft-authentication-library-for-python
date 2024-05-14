@@ -41,7 +41,8 @@ The supported AD FS versions in this federated scenario are:
 
 The following applies whether you connect directly to Active Directory Federation Services (AD FS) or through Active Directory.
 
-When you acquire a token using `acquire_token_by_username_password`, MSAL Python gets the identity provider to contact based on the username. MSAL Python gets a [SAML 1.1 token](/azure/active-directory/develop/reference-saml-tokens) from the identity provider, which it then provides to Microsoft Entra which returns the JSON Web Token (JWT).
+When you acquire a token using `acquire_token_by_username_password`, MSAL Python gets the identity provider to contact based on the username. MSAL Python gets a [SAML 1.1 token](/azure/active-directory/develop/reference-saml-tokens) from the identity provider, which it then provides to Microsoft Entra which returns the JSON Web Token (JWT). We do not recommend the username and password flow as it presents security risks that are not present in other flows. For more information about why you want to avoid using this grant, see [why Microsoft is working to make passwords a thing of the past](https://news.microsoft.com/features/whats-solution-growing-problem-passwords-says-microsoft/). 
+
 
 ## Connecting directly to AD FS
 
