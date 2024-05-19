@@ -16,9 +16,9 @@ ms.reviewer: shermanouko, rayluo
 
 The content below are applicable to [all MSAL libraries](/entra/msal), not just MSAL Python.
 
-## Using username and password is not recommended
+## The username and password flow is not recommended
 
-In general Microsoft does not advise customers to use it as it's less secure than the other flows. For more information about why you want to avoid using this grant you can read [why Microsoft is working to make passwords a thing of the past](https://news.microsoft.com/features/whats-solution-growing-problem-passwords-says-microsoft/).
+Microsoft recommends you do not use the username and password flow. In most scenarios, more secure alternatives are available and recommended. This flow requires a very high degree of trust in the application, and carries risks that are not present in other flows. You should only use this flow when other more secure flows aren't viable. For more information about why you want to avoid using this grant, see [why Microsoft is working to make passwords a thing of the past](https://news.microsoft.com/features/whats-solution-growing-problem-passwords-says-microsoft/).
 
 ## Constraints
 

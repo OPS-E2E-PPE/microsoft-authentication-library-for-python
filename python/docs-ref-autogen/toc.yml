@@ -1,37 +1,34 @@
 - items:
   - name: Overview
-    uid: project-msal
+    uid: msal
   - items:
     - name: Overview
       uid: msal.application
-    - name: msal.application.ClientApplication
+    - name: ClientApplication
       uid: msal.application.ClientApplication
-    - name: msal.application.ConfidentialClientApplication
+    - name: ConfidentialClientApplication
       uid: msal.application.ConfidentialClientApplication
-    - name: msal.application.PublicClientApplication
+    - name: PublicClientApplication
       uid: msal.application.PublicClientApplication
-    name: msal.application
+    name: application
   - items:
     - name: Overview
       uid: msal.auth_scheme
-    - name: msal.auth_scheme.PopAuthScheme
+    - name: PopAuthScheme
       uid: msal.auth_scheme.PopAuthScheme
-    name: msal.auth_scheme
+    name: auth_scheme
   - items:
     - name: Overview
       uid: msal.token_cache
-    - name: msal.token_cache.SerializableTokenCache
+    - name: SerializableTokenCache
       uid: msal.token_cache.SerializableTokenCache
     - items:
       - name: Overview
         uid: msal.token_cache.TokenCache
-      - name: msal.token_cache.TokenCache.AuthorityType
+      - name: AuthorityType
         uid: msal.token_cache.TokenCache.AuthorityType
-      - name: msal.token_cache.TokenCache.CredentialType
+      - name: CredentialType
         uid: msal.token_cache.TokenCache.CredentialType
-      name: msal.token_cache.TokenCache
-    name: msal.token_cache
-  - name: msal
-    uid: msal
+      name: TokenCache
+    name: token_cache
   name: msal
-
