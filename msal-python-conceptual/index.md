@@ -14,7 +14,7 @@ ms.reviewer: dmwendia, rayluo
 
 # Microsoft Authentication Library (MSAL) for Python
 
-The Microsoft Authentication Library (MSAL) for Python library enables you to sign in users or apps with Microsoft identities. These identities include work and school accounts, personal Microsoft accounts, social accounts, customer accounts, and so on. Using MSAL Python, you can acquire tokens from Microsoft Entra to call protected web APIs such as [Microsoft Graph](https://graph.microsoft.io/), other Microsoft APIs, or your own APIs. MSAL Python supports various application types, including public client applications (desktop and mobile) and confidential client applications (web apps, web APIs, and daemon applications).
+The Microsoft Authentication Library (MSAL) for Python library enables you to sign in users or apps with Microsoft identities ([Microsoft Entra ID](https://azure.microsoft.com/services/active-directory/), [Microsoft Accounts](https://account.microsoft.com), and [Azure AD B2C](https://azure.microsoft.com/services/active-directory-b2c/) accounts). Using MSAL Python, you can acquire tokens from Microsoft Entra ID to call protected web APIs such as [Microsoft Graph](https://graph.microsoft.io/), other Microsoft APIs, or your own APIs.
 
 ## Prerequisites
 
