@@ -1,0 +1,93 @@
+### YamlMime:PythonClass
+uid: msal.managed_identity.ManagedIdentityClient
+name: ManagedIdentityClient
+fullName: msal.managed_identity.ManagedIdentityClient
+module: msal.managed_identity
+inheritances:
+- builtins.object
+summary: "This API encapsulates multiple managed identity back-ends:\nVM, App Service,\
+  \ Azure Automation (Runbooks), Azure Function, Service Fabric,\nand Azure Arc.\n\
+  \nIt also provides token cache support.\n\n> [!NOTE]\n> Cloud Shell support is NOT\
+  \ implemented in this class.\n>\n> Since MSAL Python 1.18 in May 2022, it has been\
+  \ implemented in\n>\n> <xref:PublicClientApplication.acquire_token_interactive>\
+  \ via calling pattern\n>\n> PublicClientApplication(...).acquire_token_interactive(scopes=[...],\
+  \ prompt=\"none\").\n>\n> That is appropriate, because Cloud Shell yields a token\
+  \ with\n>\n> delegated permissions for the end user who has signed in to the Azure\
+  \ Portal\n>\n> (like what a PublicClientApplication does),\n>\n> not a token with\
+  \ application permissions for an app.\n>\n\nCreate a managed identity client.\n\n\
+  Recipe 1: Hard code a managed identity for your app:\n\n<!-- literal_block {\"ids\"\
+  : [], \"classes\": [], \"names\": [], \"dupnames\": [], \"backrefs\": [], \"xml:space\"\
+  : \"preserve\", \"language\": \"default\", \"force\": false, \"linenos\": false}\
+  \ -->\n\n````default\n\n   import msal, requests\n   client = msal.ManagedIdentityClient(\n\
+  \       msal.UserAssignedManagedIdentity(client_id=\"foo\"),\n       http_client=requests.Session(),\n\
+  \       )\n   token = client.acquire_token_for_client(\"resource\")\n   ````\n\n\
+  Recipe 2: Write once, run everywhere.\nIf you use different managed identity on\
+  \ different deployment,\nyou may use an environment variable (such as MY_MANAGED_IDENTITY_CONFIG)\n\
+  to store a json blob like\n`{\"ManagedIdentityIdType\": \"ClientId\", \"Id\": \"\
+  foo\"}` or\n`{\"ManagedIdentityIdType\": \"SystemAssignedManagedIdentity\", \"Id\"\
+  : null})`.\nThe following app can load managed identity configuration dynamically:\n\
+  \n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\": [], \"dupnames\"\
+  : [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\": \"default\",\
+  \ \"force\": false, \"linenos\": false} -->\n\n````default\n\n   import json, os,\
+  \ msal, requests\n   config = os.getenv(\"MY_MANAGED_IDENTITY_CONFIG\")\n   assert\
+  \ config, \"An ENV VAR with value should exist\"\n   client = msal.ManagedIdentityClient(\n\
+  \       json.loads(config),\n       http_client=requests.Session(),\n       )\n\
+  \   token = client.acquire_token_for_client(\"resource\")\n   ````"
+constructor:
+  syntax: 'ManagedIdentityClient(managed_identity: dict | ManagedIdentity | SystemAssignedManagedIdentity
+    | UserAssignedManagedIdentity, *, http_client, token_cache=None, http_cache=None)'
+  parameters:
+  - name: managed_identity
+    description: 'It accepts an instance of <xref:msal.managed_identity.SystemAssignedManagedIdentity>
+
+      or <xref:msal.managed_identity.UserAssignedManagedIdentity>.
+
+      They are equivalent to a dict with a certain shape,
+
+      which may be loaded from a JSON configuration file or an env var.'
+    isRequired: true
+  - name: http_client
+    description: "An http client object. For example, you can use `requests.Session()`,\n\
+      optionally with exponential backoff behavior demonstrated in this recipe:\n\n\
+      <!-- literal_block {\"ids\": [], \"classes\": [], \"names\": [], \"dupnames\"\
+      : [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\": \"default\"\
+      , \"force\": false, \"linenos\": false} -->\n\n````default\n\n   import msal,\
+      \ requests\n   from requests.adapters import HTTPAdapter, Retry\n   s = requests.Session()\n\
+      \   retries = Retry(total=3, backoff_factor=0.1, status_forcelist=[\n      \
+      \ 429, 500, 501, 502, 503, 504])\n   s.mount('https://', HTTPAdapter(max_retries=retries))\n\
+      \   managed_identity = ...\n   client = msal.ManagedIdentityClient(managed_identity,\
+      \ http_client=s)\n   ````"
+    isRequired: true
+  - name: token_cache
+    description: 'Optional. It accepts a <xref:msal.TokenCache> instance to store
+      tokens.
+
+      It will use an in-memory token cache by default.'
+    isRequired: true
+  - name: http_cache
+    description: 'Optional. It has the same characteristics as the
+
+      >>:paramref:`msal.ClientApplication.http_cache`<<.'
+    isRequired: true
+  keywordOnlyParameters:
+  - name: http_client
+    isRequired: true
+  - name: token_cache
+    isRequired: true
+  - name: http_cache
+    isRequired: true
+methods:
+- uid: msal.managed_identity.ManagedIdentityClient.acquire_token_for_client
+  name: acquire_token_for_client
+  summary: "Acquire token for the managed identity.\n\nThe result will be automatically\
+    \ cached.\nSubsequent calls will automatically search from cache first.\n\n> [!NOTE]\n\
+    > Known issue: When an Azure VM has only one user-assigned managed identity,\n\
+    >\n> and your app specifies to use system-assigned managed identity,\n>\n> Azure\
+    \ VM may still return a token for your user-assigned identity.\n>\n> \n>\n> This\
+    \ is a service-side behavior that cannot be changed by this library.\n>\n> [Azure\
+    \ VM docs](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http)\n\
+    >"
+  signature: acquire_token_for_client(*, resource)
+  keywordOnlyParameters:
+  - name: resource
+    isRequired: true
