@@ -1,0 +1,9 @@
+### YamlMime:PythonClass
+uid: msal.managed_identity.ManagedIdentityError
+name: ManagedIdentityError
+fullName: msal.managed_identity.ManagedIdentityError
+module: msal.managed_identity
+inheritances:
+- builtins.ValueError
+constructor:
+  syntax: ManagedIdentityError()
