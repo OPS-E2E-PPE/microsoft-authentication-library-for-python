@@ -1,0 +1,23 @@
+### YamlMime:PythonModule
+uid: msal.managed_identity
+name: managed_identity
+fullName: msal.managed_identity
+functions:
+- uid: msal.managed_identity.get_managed_identity_source
+  name: get_managed_identity_source
+  summary: 'Detect the current environment and return the likely identity source.
+
+
+    When this function returns `CLOUD_SHELL`, you should use
+
+    <xref:msal.PublicClientApplication.acquire_token_interactive> with `prompt="none"`
+
+    to obtain a token.'
+  signature: get_managed_identity_source()
+classes:
+- msal.managed_identity.ArcPlatformNotSupportedError
+- msal.managed_identity.ManagedIdentity
+- msal.managed_identity.ManagedIdentityClient
+- msal.managed_identity.ManagedIdentityError
+- msal.managed_identity.SystemAssignedManagedIdentity
+- msal.managed_identity.UserAssignedManagedIdentity

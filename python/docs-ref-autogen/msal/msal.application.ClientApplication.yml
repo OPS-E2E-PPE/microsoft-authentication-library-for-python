@@ -56,10 +56,22 @@ constructor:
       : [], \"names\": [], \"dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\"\
       , \"language\": \"default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\
       \n   {\n       \"client_assertion\": \"...a JWT with claims aud, exp, iss, jti,\
-      \ nbf, and sub...\"\n   }\n   ````"
+      \ nbf, and sub...\"\n   }\n   ````\n\n\n\n## Supporting reading client cerficates\
+      \ from PFX files*Added in version 1.29.0*:\nFeed in a dictionary containing\
+      \ the path to a PFX file:\n\n<!-- literal_block {\"ids\": [], \"classes\": [],\
+      \ \"names\": [], \"dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\"\
+      , \"language\": \"default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\
+      \n   {\n       \"private_key_pfx_path\": \"/path/to/your.pfx\",\n       \"passphrase\"\
+      : \"Passphrase if the private_key is encrypted (Optional. Added in version 1.6.0)\"\
+      ,\n   }\n   ````\n\nThe following command will generate a .pfx file from your\
+      \ .key and .pem file:\n\n<!-- literal_block {\"ids\": [], \"classes\": [], \"\
+      names\": [], \"dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\"\
+      , \"language\": \"default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\
+      \n   openssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.pem\n\
+      \   ````"
     defaultValue: None
     types:
-    - <xref:typing.Union>[<xref:str>, <xref:dict>]
+    - <xref:typing.Union>[<xref:dict>, <xref:str>]
   - name: client_claims
     description: "*Added in version 0.5.0*:\nIt is a dictionary of extra claims that\
       \ would be signed by\nby this <xref:msal.application.ConfidentialClientApplication>\

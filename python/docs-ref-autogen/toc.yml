@@ -19,6 +19,22 @@
     name: auth_scheme
   - items:
     - name: Overview
+      uid: msal.managed_identity
+    - name: ArcPlatformNotSupportedError
+      uid: msal.managed_identity.ArcPlatformNotSupportedError
+    - name: ManagedIdentity
+      uid: msal.managed_identity.ManagedIdentity
+    - name: ManagedIdentityClient
+      uid: msal.managed_identity.ManagedIdentityClient
+    - name: ManagedIdentityError
+      uid: msal.managed_identity.ManagedIdentityError
+    - name: SystemAssignedManagedIdentity
+      uid: msal.managed_identity.SystemAssignedManagedIdentity
+    - name: UserAssignedManagedIdentity
+      uid: msal.managed_identity.UserAssignedManagedIdentity
+    name: managed_identity
+  - items:
+    - name: Overview
       uid: msal.token_cache
     - name: SerializableTokenCache
       uid: msal.token_cache.SerializableTokenCache

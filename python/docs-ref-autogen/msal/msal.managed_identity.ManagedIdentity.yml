@@ -1,0 +1,55 @@
+### YamlMime:PythonClass
+uid: msal.managed_identity.ManagedIdentity
+name: ManagedIdentity
+fullName: msal.managed_identity.ManagedIdentity
+module: msal.managed_identity
+inheritances:
+- collections.UserDict
+summary: 'Feed an instance of this class to <xref:msal.ManagedIdentityClient>
+
+  to acquire token for the specified managed identity.'
+constructor:
+  syntax: ManagedIdentity(identifier=None, id_type=None)
+  parameters:
+  - name: identifier
+    defaultValue: None
+  - name: id_type
+    defaultValue: None
+methods:
+- uid: msal.managed_identity.ManagedIdentity.is_managed_identity
+  name: is_managed_identity
+  signature: is_managed_identity(unknown)
+  parameters:
+  - name: unknown
+    isRequired: true
+- uid: msal.managed_identity.ManagedIdentity.is_system_assigned
+  name: is_system_assigned
+  signature: is_system_assigned(unknown)
+  parameters:
+  - name: unknown
+    isRequired: true
+- uid: msal.managed_identity.ManagedIdentity.is_user_assigned
+  name: is_user_assigned
+  signature: is_user_assigned(unknown)
+  parameters:
+  - name: unknown
+    isRequired: true
+attributes:
+- uid: msal.managed_identity.ManagedIdentity.CLIENT_ID
+  name: CLIENT_ID
+  signature: CLIENT_ID = 'ClientId'
+- uid: msal.managed_identity.ManagedIdentity.ID
+  name: ID
+  signature: ID = 'Id'
+- uid: msal.managed_identity.ManagedIdentity.ID_TYPE
+  name: ID_TYPE
+  signature: ID_TYPE = 'ManagedIdentityIdType'
+- uid: msal.managed_identity.ManagedIdentity.OBJECT_ID
+  name: OBJECT_ID
+  signature: OBJECT_ID = 'ObjectId'
+- uid: msal.managed_identity.ManagedIdentity.RESOURCE_ID
+  name: RESOURCE_ID
+  signature: RESOURCE_ID = 'ResourceId'
+- uid: msal.managed_identity.ManagedIdentity.SYSTEM_ASSIGNED
+  name: SYSTEM_ASSIGNED
+  signature: SYSTEM_ASSIGNED = 'SystemAssigned'
