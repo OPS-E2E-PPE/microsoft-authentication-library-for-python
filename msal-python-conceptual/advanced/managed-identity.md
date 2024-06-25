@@ -47,4 +47,6 @@ Prior to using managed identities from MSAL Python, developers must enable them 
 
 ## Examples
 
+In both system- and user-assigned identities, developers need to use <xref:msal.managed_identity.ManagedIdentityClient> to access managed identities.
+
 ### System-assigned managed identities
