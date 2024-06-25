@@ -50,3 +50,23 @@ Prior to using managed identities from MSAL Python, developers must enable them 
 In both system- and user-assigned identities, developers need to use <xref:msal.managed_identity.ManagedIdentityClient> to access managed identities.
 
 ### System-assigned managed identities
+
+System-assigned managed identities can be used by instantiating <xref:msal.managed_identity.SystemAssignedManagedIdentity> and passing to <xref:msal.managed_identity.ManagedIdentityClient>.
+
+>[!NOTE]
+>You also need to pass a `http_client` reference.
+
+```python
+import msal
+import requests
+
+managed_identity = msal.SystemAssignedManagedIdentity()
+
+global_app = msal.ManagedIdentityClient(managed_identity, http_client=requests.Session())
+
+result = global_app.acquire_token_for_client(resource='https://vault.azure.net')
+
+if "access_token" in result:
+    print("Token obtained!")
+```
+
