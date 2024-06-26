@@ -54,7 +54,9 @@ In both system- and user-assigned identities, developers need to use <xref:msal.
 System-assigned managed identities can be used by instantiating <xref:msal.managed_identity.SystemAssignedManagedIdentity> and passing to <xref:msal.managed_identity.ManagedIdentityClient>.
 
 >[!NOTE]
->You also need to pass a `http_client` reference.
+>You also need to pass a `http_client` reference, which can be set to `requests.Session()`, which keeps track of a pool of connections to the IMDS endpoint.
+
+You can specify the target resource scope when calling [`acquire_token_for_client`](xref:msal.managed_identity.ManagedIdentityClient.acquire_token_for_client).
 
 ```python
 import msal
