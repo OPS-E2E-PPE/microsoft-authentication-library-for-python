@@ -54,7 +54,7 @@ In both system- and user-assigned identities, developers need to use <xref:msal.
 System-assigned managed identities can be used by instantiating <xref:msal.managed_identity.SystemAssignedManagedIdentity> and passing to <xref:msal.managed_identity.ManagedIdentityClient>.
 
 >[!NOTE]
->You also need to pass a `http_client` reference, which can be set to `requests.Session()`, which keeps track of a pool of connections to the IMDS endpoint.
+>You need to include a `http_client` reference, which can be set to `requests.Session()`. This enables MSAL to maintain a pool of connections to the IMDS endpoint.
 
 You can specify the target resource scope when calling [`acquire_token_for_client`](xref:msal.managed_identity.ManagedIdentityClient.acquire_token_for_client).
 
@@ -72,3 +72,39 @@ if "access_token" in result:
     print("Token obtained!")
 ```
 
+>[!IMPORTANT]
+>You need to enable a system-assigned identity for the resource where the Python code runs; otherwise, no token will be returned.
+
+### User-assigned managed identities
+
+User-assigned managed identities can be used by instantiating <xref:msal.managed_identity.UserAssignedManagedIdentity> and passing to <xref:msal.managed_identity.ManagedIdentityClient>. You will need to specify the **one of the following**:
+
+- Client ID (`client_id`)
+- Resource ID (`resource_id`)
+- Object ID (`object_id`)
+
+>[!NOTE]
+>You need to include a `http_client` reference, which can be set to `requests.Session()`. This enables MSAL to maintain a pool of connections to the IMDS endpoint.
+
+You can specify the target resource scope when calling [`acquire_token_for_client`](xref:msal.managed_identity.ManagedIdentityClient.acquire_token_for_client).
+
+```python
+import msal
+import requests
+
+managed_identity = msal.UserAssignedManagedIdentity(client_id='YOUR_CLIENT_ID')
+
+global_app = msal.ManagedIdentityClient(managed_identity, http_client=requests.Session())
+
+result = global_app.acquire_token_for_client(resource='https://vault.azure.net')
+
+if "access_token" in result:
+    print("Token obtained!")
+```
+
+>[!IMPORTANT]
+>You need to attach a user-assigned identity for the resource where the Python code runs; otherwise, no token will be returned. If an incorrect identifier is used for the user-assigned managed identity, no token will be returned as well.
+
+## Caching
+
+By default, MSAL Python supports in-memory caching. MSAL does not support cache extensibility for managed identity because of security concerns when using distributed cache. Since a token acquired for managed identity belongs to an Azure resource, using a distributed cache might expose it to the other Azure resources sharing the cache.
