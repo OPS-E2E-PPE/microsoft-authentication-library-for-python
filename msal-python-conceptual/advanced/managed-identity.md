@@ -107,4 +107,4 @@ if "access_token" in result:
 
 ## Caching
 
-By default, MSAL Python supports in-memory caching. MSAL does not support cache extensibility for managed identity because of security concerns when using distributed cache. Since a token acquired for managed identity belongs to an Azure resource, using a distributed cache might expose it to the other Azure resources sharing the cache.
+By default, MSAL Python supports in-memory caching. MSAL Python also support cache extensibility for managed identity, so that you may persist the token cache on disk. This can be useful if you are writing a command-line script in Python. We do not recommend sharing managed identity token cache among multiple machines.
