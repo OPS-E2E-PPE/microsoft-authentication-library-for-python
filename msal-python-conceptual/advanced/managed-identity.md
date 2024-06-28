@@ -111,4 +111,7 @@ if "access_token" in result:
 
 ## Caching
 
-By default, MSAL Python supports in-memory caching. MSAL Python also support cache extensibility for managed identity, so that you may persist the token cache on disk. This can be useful if you are writing a command-line script in Python. We do not recommend sharing managed identity token cache among multiple machines.
+By default, MSAL Python supports in-memory caching.
+
+>[!IMPORTANT]
+>MSAL Python also supports cache extensibility for managed identity, so that you may persist the token cache on disk. This can be useful if you are writing a command-line script and a few other limited scenarios. We **do not recommend** sharing managed identity token cache among multiple machines as this can result in unexpected access behaviors for users of the cache.
