@@ -104,7 +104,7 @@ if "access_token" in result:
 ```
 
 >[!NOTE]
->MSAL Python's [built-in Managed Identity (MI) sample](https://github.com/AzureAD/microsoft-authentication-library-for-python/blob/1.29.0/sample/managed_identity_sample.py#L38-L42) showcases how user-assigned managed identity can be inferred from environment variables. It's an advanced usage pattern that can be used instead of explicit definition of the client ID in code.
+>MSAL Python's [built-in managed identity sample](https://github.com/AzureAD/microsoft-authentication-library-for-python/blob/1.29.0/sample/managed_identity_sample.py#L38-L42) showcases how user-assigned managed identity can be inferred from environment variables. It's an advanced usage pattern that can be used instead of explicit definition of the client ID in code.
 
 >[!IMPORTANT]
 >You need to attach a user-assigned identity for the resource where the Python code runs; otherwise, no token will be returned. If an incorrect identifier is used for the user-assigned managed identity, no token will be returned as well.
@@ -114,4 +114,4 @@ if "access_token" in result:
 By default, MSAL Python supports in-memory caching.
 
 >[!IMPORTANT]
->MSAL Python also supports cache extensibility for managed identity, so that you may persist the token cache on disk. This can be useful if you are writing a command-line script and a few other limited scenarios. We **do not recommend** sharing managed identity token cache among multiple machines as this can result in unexpected access behaviors for users of the cache.
+>MSAL Python also supports cache extensibility for managed identity, so that you may persist the token cache on disk. This can be useful if you are writing a command-line script and a few other limited scenarios. We **do not recommend** sharing managed identity token cache among multiple machines as this can result in unexpected access behaviors for users of the cache. A token acquired for a node/machine, if cached in a distributed cache, can be used for another machine for which it is not intended.
