@@ -25,6 +25,7 @@ MSAL Python supports acquiring tokens through the managed identity service when 
 - [Azure Arc](/azure/azure-arc/overview)
 - [Azure Cloud Shell](/azure/cloud-shell/overview)
 - [Azure Service Fabric](/azure/service-fabric/service-fabric-overview)
+- [Azure ML](/azure/machine-learning/how-to-identity-based-service-authentication)
 
 For a complete list, refer to [Azure services that can use managed identities to access other services](/azure/active-directory/managed-identities-azure-resources/managed-identities-status).
 
@@ -101,6 +102,9 @@ result = global_app.acquire_token_for_client(resource='https://vault.azure.net')
 if "access_token" in result:
     print("Token obtained!")
 ```
+
+>[!NOTE]
+>MSAL Python's [built-in Managed Identity (MI) sample](https://github.com/AzureAD/microsoft-authentication-library-for-python/blob/1.29.0/sample/managed_identity_sample.py#L38-L42) showcases how user-assigned managed identity can be inferred from environment variables. It's an advanced usage pattern that can be used instead of explicit definition of the client ID in code.
 
 >[!IMPORTANT]
 >You need to attach a user-assigned identity for the resource where the Python code runs; otherwise, no token will be returned. If an incorrect identifier is used for the user-assigned managed identity, no token will be returned as well.
