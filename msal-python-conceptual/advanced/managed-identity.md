@@ -20,7 +20,7 @@ ms.reviewer: rayluo
 
 MSAL Python supports acquiring tokens through the managed identity service when used with applications running inside Azure infrastructure, such as:
 
-- [Azure App Service](https://azure.microsoft.com/products/app-service/) (API version `2019-08-01` and above)
+- [Azure App Service](https://azure.microsoft.com/products/app-service/) (API version `2019-08-01`)
 - [Azure VMs](https://azure.microsoft.com/free/virtual-machines/)
 - [Azure Arc](/azure/azure-arc/overview)
 - [Azure Cloud Shell](/azure/cloud-shell/overview)
