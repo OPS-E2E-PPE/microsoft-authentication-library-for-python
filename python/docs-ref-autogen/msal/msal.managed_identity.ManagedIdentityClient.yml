@@ -87,7 +87,34 @@ methods:
     \ is a service-side behavior that cannot be changed by this library.\n>\n> [Azure\
     \ VM docs](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http)\n\
     >"
-  signature: acquire_token_for_client(*, resource)
+  signature: 'acquire_token_for_client(*, resource: str, claims_challenge: str | None
+    = None)'
+  parameters:
+  - name: resource
+    description: The resource for which the token is acquired.
+    isRequired: true
+  - name: claims_challenge
+    description: 'Optional.
+
+      It is a string representation of a JSON object
+
+      (which contains lists of claims being requested).
+
+
+      The tenant admin may choose to revoke all Managed Identity tokens,
+
+      and then a *claims challenge* will be returned by the target resource,
+
+      as a *claims_challenge* directive in the *www-authenticate* header,
+
+      even if the app developer did not opt in for the "CP1" client capability.
+
+      Upon receiving a *claims_challenge*, MSAL will skip a token cache read,
+
+      and will attempt to acquire a new token.'
+    isRequired: true
   keywordOnlyParameters:
   - name: resource
+    isRequired: true
+  - name: claims_challenge
     isRequired: true
