@@ -15,7 +15,7 @@ If you would like to author an entirely new document (e.g., for a new scenario),
 
 ## API reference documentation automation
 
-Continuous Integration (CI) jobs for this repository are available in the [automation Azure DevOps instance](https://apidrop.visualstudio.com/Content%20CI/_build?definitionId=5247).
+Continuous Integration (CI) jobs for this repository are available in the [automation Azure DevOps instance](https://apidrop.visualstudio.com/Content%20CI/_build?definitionId=6169).
 
 >**Note**
 >The changes from the CI job will always be pushed to the `smoke-test` branch first. To propagate them to production, merge the changes into `main`, and then merge `main` to `live`. Ensure that all checks pass before merging changes.
