@@ -21,7 +21,7 @@ If you would like to author an entirely new document (e.g., for a new scenario),
 
 **Do not** modify any XML files in the `python/docs-ref-autogen` folder - those are generated automatically from the library source code and any changes will be automatically overwritten the next time the documentation runs.
 
-To make changes to any API docs you will need to open a pull request in the [`AzureAD/microsoft-authentication-library-for-python`](AzureAD/microsoft-authentication-library-for-python) repository and amend code comments.
+To make changes to any API docs you will need to open a pull request in the [`AzureAD/microsoft-authentication-library-for-python`](https://github.com/AzureAD/microsoft-authentication-library-for-python) repository and amend code comments.
 
 ## Microsoft Open Source Code of Conduct
 
