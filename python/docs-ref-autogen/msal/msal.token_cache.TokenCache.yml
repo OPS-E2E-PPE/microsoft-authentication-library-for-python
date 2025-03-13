@@ -26,7 +26,7 @@ methods:
 - uid: msal.token_cache.TokenCache.find
   name: find
   summary: Equivalent to list(search(...)).
-  signature: find(credential_type, target=None, query=None)
+  signature: find(credential_type, target=None, query=None, *, now=None)
   parameters:
   - name: credential_type
     isRequired: true
@@ -34,6 +34,9 @@ methods:
     defaultValue: None
   - name: query
     defaultValue: None
+  keywordOnlyParameters:
+  - name: now
+    isRequired: true
 - uid: msal.token_cache.TokenCache.modify
   name: modify
   signature: modify(credential_type, old_entry, new_key_value_pairs=None)
@@ -76,7 +79,7 @@ methods:
     It is O(1) for AT hits, and O(n) for other types.
 
     Note that it holds a lock during the entire search.'
-  signature: search(credential_type, target=None, query=None)
+  signature: search(credential_type, target=None, query=None, *, now=None)
   parameters:
   - name: credential_type
     isRequired: true
@@ -84,6 +87,9 @@ methods:
     defaultValue: None
   - name: query
     defaultValue: None
+  keywordOnlyParameters:
+  - name: now
+    isRequired: true
 - uid: msal.token_cache.TokenCache.update_rt
   name: update_rt
   signature: update_rt(rt_item, new_rt)
