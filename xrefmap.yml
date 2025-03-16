@@ -24995,6 +24995,10 @@ references:
   href: https://docs.python.org/3/library/winsound.html#winsound.SND_ALIAS
   name: SND_ALIAS
   uid: winsound.SND_ALIAS
+- fullName: winsound.SND_APPLICATION
+  href: https://docs.python.org/3/library/winsound.html#winsound.SND_APPLICATION
+  name: SND_APPLICATION
+  uid: winsound.SND_APPLICATION
 - fullName: winsound.SND_ASYNC
   href: https://docs.python.org/3/library/winsound.html#winsound.SND_ASYNC
   name: SND_ASYNC
