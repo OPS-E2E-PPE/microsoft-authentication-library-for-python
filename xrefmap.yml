@@ -19751,6 +19751,10 @@ references:
   href: https://docs.python.org/3/library/dis.html#dis.Instruction.baseopname
   name: baseopname
   uid: dis.Instruction.baseopname
+- fullName: dis.Instruction.cache_info
+  href: https://docs.python.org/3/library/dis.html#dis.Instruction.cache_info
+  name: cache_info
+  uid: dis.Instruction.cache_info
 - fullName: dis.Instruction.cache_offset
   href: https://docs.python.org/3/library/dis.html#dis.Instruction.cache_offset
   name: cache_offset
