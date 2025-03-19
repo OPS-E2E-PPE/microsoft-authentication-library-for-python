@@ -15,14 +15,20 @@ ms.date:     03/18/2025
 # Using MSAL Python with an Authentication Broker on Linux
 
 
-# Using MSAL Python with an Authentication Broker on macOS
-
 > [!NOTE]
 > Linux authentication broker support is introduced with `msal` version UPDATE_ME.
 
-Using an authentication brokers on macOS enables you to simplify how your users authenticate with Microsoft Entra ID from your application, as well as take advantage of future functionality that protects Microsoft Entra ID refresh tokens from exfiltration and misuse.
+Using an authentication brokers on Linux enables you to simplify how your users authenticate with Microsoft Entra ID from your application, as well as take advantage of future functionality that protects Microsoft Entra ID refresh tokens from exfiltration and misuse.
 
-Authentication brokers are **not** pre-installed on macOS but are applications developed by Microsoft, such as [Company Portal](/mem/intune/apps/apps-company-portal-macos). These applications are usually installed when a macOS computer is enrolled in a company's device fleet via an endpoint management solution like [Microsoft Intune](/mem/intune/fundamentals/what-is-intune). To learn more about Apple device set up with the Microsoft Identity Platform, refer to [Microsoft Enterprise SSO plug-in for Apple devices](/entra/identity-platform/apple-sso-plugin).
+Authentication brokers are **not** pre-installed on Linux but are applications developed by Microsoft, such as [Company Portal](/mem/intune/apps/apps-company-portal-macos). These applications are usually installed when a Linux computer is enrolled in a company's device fleet via an endpoint management solution like [Microsoft Intune](/mem/intune/fundamentals/what-is-intune). To learn more about Linux device set up with the Microsoft Identity Platform, refer to {TODO}  [Microsoft Enterprise SSO plug-in for Apple devices](/entra/identity-platform/apple-sso-plugin).
+
+1. In the MSAL Python library, we've introduced the `enable_broker_on_linux` flag, which enables the broker on both WSL and standalone Linux. However, if your goal is to enable broker support solely on WSL for Azure CLI, you can consider modifying the Azure CLI app code to activate the `enable_broker_on_linux` flag exclusively on WSL.
+
+1. For WSL, there are no additional dependencies required. The Windows Authentication Manager (WAM), which is available by default on Windows, will serve as the broker. For standalone Linux, you'll need to have the Intune Portal installed for the Linux standalone broker to be set up and running.
+
+1. If the broker is not installed on standalone Linux, it will fall back to the non-broker authentication flow.
+
+1. If you choose to enable the broker on standalone Linux as well, you would need to test this environment to ensure there is no regression.
 
 ## Usage
 
