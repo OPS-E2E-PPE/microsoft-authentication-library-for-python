@@ -70,9 +70,9 @@ constructor:
     defaultValue: None
   keywordOnlyParameters:
   - name: enable_broker_on_windows
-    isRequired: true
+    defaultValue: None
   - name: enable_broker_on_mac
-    isRequired: true
+    defaultValue: None
 methods:
 - uid: msal.application.PublicClientApplication.acquire_token_by_device_flow
   name: acquire_token_by_device_flow

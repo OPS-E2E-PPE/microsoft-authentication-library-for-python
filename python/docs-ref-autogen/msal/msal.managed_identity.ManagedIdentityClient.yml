@@ -71,9 +71,9 @@ constructor:
   - name: http_client
     isRequired: true
   - name: token_cache
-    isRequired: true
+    defaultValue: None
   - name: http_cache
-    isRequired: true
+    defaultValue: None
 methods:
 - uid: msal.managed_identity.ManagedIdentityClient.acquire_token_for_client
   name: acquire_token_for_client
@@ -115,4 +115,4 @@ methods:
   - name: resource
     isRequired: true
   - name: claims_challenge
-    isRequired: true
+    defaultValue: None

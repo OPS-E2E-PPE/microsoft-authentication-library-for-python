@@ -36,7 +36,7 @@ methods:
     defaultValue: None
   keywordOnlyParameters:
   - name: now
-    isRequired: true
+    defaultValue: None
 - uid: msal.token_cache.TokenCache.modify
   name: modify
   signature: modify(credential_type, old_entry, new_key_value_pairs=None)
@@ -89,7 +89,7 @@ methods:
     defaultValue: None
   keywordOnlyParameters:
   - name: now
-    isRequired: true
+    defaultValue: None
 - uid: msal.token_cache.TokenCache.update_rt
   name: update_rt
   signature: update_rt(rt_item, new_rt)
