@@ -27811,6 +27811,10 @@ references:
   href: https://docs.python.org/3/library/dataclasses.html#dataclasses.Field
   name: Field
   uid: dataclasses.Field
+- fullName: dataclasses.InitVar
+  href: https://docs.python.org/3/library/dataclasses.html#dataclasses.InitVar
+  name: InitVar
+  uid: dataclasses.InitVar
 - fullName: datetime.date
   href: https://docs.python.org/3/library/datetime.html#datetime.date
   name: date
