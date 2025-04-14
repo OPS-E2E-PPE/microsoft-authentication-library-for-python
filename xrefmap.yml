@@ -4055,6 +4055,10 @@ references:
   href: https://docs.python.org/3/library/pickle.html#pickle.Pickler.fast
   name: fast
   uid: pickle.Pickler.fast
+- fullName: plistlib.UID.data
+  href: https://docs.python.org/3/library/plistlib.html#plistlib.UID.data
+  name: data
+  uid: plistlib.UID.data
 - fullName: property.__name__
   href: https://docs.python.org/3/library/functions.html#property.__name__
   name: __name__
