@@ -7,8 +7,8 @@
     },
     {
       "source_path_from_root": "/msal-python-conceptual/best-practices.md",
-      "redirect_url": "/msal-python-conceptual/index",
-      "redirect_document_id": true
+      "redirect_url": "/entra/msal/python/",
+      "redirect_document_id": false
     }
   ]
 }
