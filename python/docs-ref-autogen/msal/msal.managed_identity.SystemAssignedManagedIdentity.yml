@@ -1,0 +1,16 @@
+### YamlMime:PythonClass
+uid: msal.managed_identity.SystemAssignedManagedIdentity
+name: SystemAssignedManagedIdentity
+fullName: msal.managed_identity.SystemAssignedManagedIdentity
+module: msal.managed_identity
+summary: "Represent a system-assigned managed identity.\n\nIt is equivalent to a Python\
+  \ dict of:\n\n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\": [], \"\
+  dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\": \"\
+  default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\n   {\"ManagedIdentityIdType\"\
+  : \"SystemAssigned\", \"Id\": None}\n   ````\n\nor a JSON blob of:\n\n<!-- literal_block\
+  \ {\"ids\": [], \"classes\": [], \"names\": [], \"dupnames\": [], \"backrefs\":\
+  \ [], \"xml:space\": \"preserve\", \"language\": \"default\", \"force\": false,\
+  \ \"linenos\": false} -->\n\n````default\n\n   {\"ManagedIdentityIdType\": \"SystemAssigned\"\
+  , \"Id\": null}\n   ````"
+constructor:
+  syntax: SystemAssignedManagedIdentity()

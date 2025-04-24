@@ -2,8 +2,10 @@
 uid: msal
 name: msal
 fullName: msal
-type: import
+type: rootImport
 modules:
 - msal.application
 - msal.auth_scheme
+- msal.managed_identity
+- msal.sku
 - msal.token_cache

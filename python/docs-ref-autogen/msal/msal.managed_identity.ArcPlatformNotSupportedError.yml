@@ -1,0 +1,7 @@
+### YamlMime:PythonClass
+uid: msal.managed_identity.ArcPlatformNotSupportedError
+name: ArcPlatformNotSupportedError
+fullName: msal.managed_identity.ArcPlatformNotSupportedError
+module: msal.managed_identity
+constructor:
+  syntax: ArcPlatformNotSupportedError()

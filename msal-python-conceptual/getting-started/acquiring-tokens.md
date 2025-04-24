@@ -124,6 +124,8 @@ else:
 
 We don't recommend using this approach. It's also possible to get a token with a [username and password](/entra/identity-platform/v2-oauth-ropc). MSAL Python provides the [*acquire_token_by_username_password*](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-by-username-password) method for this use case. It's not recommended because the application will be asking a user for their password directly, which is an insecure pattern.
 
+Microsoft doesn't recommend the username and password flow because the application will be asking a user for their password directly, which is an insecure pattern. In most scenarios, there exist more secure flows that you can use. Learn more in the [username and password authentication flow](../advanced/username-password-authentication.md) guidance.
+
 ```python
 result = app.acquire_token_by_username_password(
     username=config["username"], password=config["password"], scopes=config["scope"])

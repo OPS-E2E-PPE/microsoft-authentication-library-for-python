@@ -3,8 +3,6 @@ uid: msal.application.ClientApplication
 name: ClientApplication
 fullName: msal.application.ClientApplication
 module: msal.application
-inheritances:
-- builtins.object
 summary: 'You do not usually directly use this class. Use its subclasses instead:
 
   <xref:msal.application.PublicClientApplication> and <xref:msal.application.ConfidentialClientApplication>.
@@ -16,49 +14,81 @@ constructor:
     token_cache=None, http_client=None, verify=True, proxies=None, timeout=None, client_claims=None,
     app_name=None, app_version=None, client_capabilities=None, azure_region=None,
     exclude_scopes=None, http_cache=None, instance_discovery=None, allow_broker=None,
-    enable_pii_log=None)
+    enable_pii_log=None, oidc_authority=None)
   parameters:
   - name: client_id
-    description: Your app has a client_id after you register it on AAD.
+    description: Your app has a client_id after you register it on Microsoft Entra
+      admin center.
     isRequired: true
     types:
     - <xref:str>
   - name: client_credential
-    description: "For <xref:msal.application.PublicClientApplication>, you simply\
-      \ use *None* here.\nFor <xref:msal.application.ConfidentialClientApplication>,\n\
-      it can be a string containing client secret,\nor an X509 certificate container\
-      \ in this form:\n\n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\"\
+    description: "For <xref:msal.application.PublicClientApplication>, you use *None*\
+      \ here.\n\nFor <xref:msal.application.ConfidentialClientApplication>,\nit supports\
+      \ many different input formats for different scenarios.\n\n\n\n## Support using\
+      \ a client secret.Just feed in a string, such as `\"your client secret\"`.\n\
+      \n\n\n## Support using a certificate in X.509 (.pem) formatFeed in a dict in\
+      \ this form:\n\n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\"\
       : [], \"dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\"\
       : \"default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\n\
       \   {\n       \"private_key\": \"...-----BEGIN PRIVATE KEY-----... in PEM format\"\
-      ,\n       \"thumbprint\": \"A1B2C3D4E5F6...\",\n       \"public_certificate\"\
-      : \"...-----BEGIN CERTIFICATE-----... (Optional. See below.)\",\n       \"passphrase\"\
-      : \"Passphrase if the private_key is encrypted (Optional. Added in version 1.6.0)\"\
-      ,\n   }\n   ````\n\nMSAL Python requires a \"private_key\" in PEM format.\n\
-      If your cert is in a PKCS12 (.pfx) format, you can also\n[convert it to PEM\
-      \ and get the thumbprint](https://github.com/Azure/azure-sdk-for-python/blob/07d10639d7e47f4852eaeb74aef5d569db499d6e/sdk/identity/azure-identity/azure/identity/_credentials/certificate.py#L101-L123).\n\
-      \nThe thumbprint is available in your app's registration in Azure Portal.\n\
-      Alternatively, you can [calculate the thumbprint](https://github.com/Azure/azure-sdk-for-python/blob/07d10639d7e47f4852eaeb74aef5d569db499d6e/sdk/identity/azure-identity/azure/identity/_credentials/certificate.py#L94-L97).\n\
-      \n*Added in version 0.5.0*:\npublic_certificate (optional) is public key certificate\n\
-      which will be sent through 'x5c' JWT header only for\nsubject name and issuer\
-      \ authentication to support cert auto rolls.\n\nPer [specs](https://tools.ietf.org/html/rfc7515#section-4.1.6),\n\
-      \"the certificate containing\nthe public key corresponding to the key used to\
+      ,\n       \"thumbprint\": \"A1B2C3D4E5F6...\",\n       \"passphrase\": \"Passphrase\
+      \ if the private_key is encrypted (Optional. Added in version 1.6.0)\",\n  \
+      \ }\n   ````\n\nMSAL Python requires a \"private_key\" in PEM format.\nIf your\
+      \ cert is in PKCS12 (.pfx) format,\nyou can convert it to X.509 (.pem) format,\n\
+      by `openssl pkcs12 -in file.pfx -out file.pem -nodes`.The thumbprint is available\
+      \ in your app's registration in Azure Portal.\nAlternatively, you can [calculate\
+      \ the thumbprint](https://github.com/Azure/azure-sdk-for-python/blob/07d10639d7e47f4852eaeb74aef5d569db499d6e/sdk/identity/azure-identity/azure/identity/_credentials/certificate.py#L94-L97).\n\
+      \n\n\n## Support Subject Name/Issuer Auth with a cert in .pem[Subject Name/Issuer\
+      \ Auth](https://github.com/AzureAD/microsoft-authentication-library-for-python/issues/60)\n\
+      is an approach to allow easier certificate rotation.*Added in version 0.5.0*:\n\
+      \n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\": [], \"dupnames\"\
+      : [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\": \"default\"\
+      , \"force\": false, \"linenos\": false} -->\n\n````default\n\n   {\n       \"\
+      private_key\": \"...-----BEGIN PRIVATE KEY-----... in PEM format\",\n      \
+      \ \"thumbprint\": \"A1B2C3D4E5F6...\",\n       \"public_certificate\": \"...-----BEGIN\
+      \ CERTIFICATE-----...\",\n       \"passphrase\": \"Passphrase if the private_key\
+      \ is encrypted (Optional. Added in version 1.6.0)\",\n   }\n   ````\n\n`public_certificate`\
+      \ (optional) is public key certificate\nwhich will be sent through 'x5c' JWT\
+      \ header only for\nsubject name and issuer authentication to support cert auto\
+      \ rolls.Per [specs](https://tools.ietf.org/html/rfc7515#section-4.1.6),\n\"\
+      the certificate containing\nthe public key corresponding to the key used to\
       \ digitally sign the\nJWS MUST be the first certificate.  This MAY be followed\
       \ by\nadditional certificates, with each subsequent certificate being the\n\
       one used to certify the previous one.\"\nHowever, your certificate's issuer\
       \ may use a different order.\nSo, if your attempt ends up with an error AADSTS700027\
       \ -\n\"The provided signature value did not match the expected signature value\"\
-      ,\nyou may try use only the leaf cert (in PEM/str format) instead.\n\n*Added\
-      \ in version 1.13.0*:\nIt can also be a completely pre-signed assertion that\
-      \ you've assembled yourself.\nSimply pass a container containing only the key\
-      \ \"client_assertion\", like this:\n\n<!-- literal_block {\"ids\": [], \"classes\"\
+      ,\nyou may try use only the leaf cert (in PEM/str format) instead.\n\n\n\n##\
+      \ Supporting raw assertion obtained from elsewhere*Added in version 1.13.0*:\n\
+      It can also be a completely pre-signed assertion that you've assembled yourself.\n\
+      Simply pass a container containing only the key \"client_assertion\", like this:\n\
+      \n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\": [], \"dupnames\"\
+      : [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\": \"default\"\
+      , \"force\": false, \"linenos\": false} -->\n\n````default\n\n   {\n       \"\
+      client_assertion\": \"...a JWT with claims aud, exp, iss, jti, nbf, and sub...\"\
+      \n   }\n   ````\n\n\n\n## Supporting reading client cerficates from PFX files*Added\
+      \ in version 1.29.0*:\nFeed in a dictionary containing the path to a PFX file:\n\
+      \n<!-- literal_block {\"ids\": [], \"classes\": [], \"names\": [], \"dupnames\"\
+      : [], \"backrefs\": [], \"xml:space\": \"preserve\", \"language\": \"default\"\
+      , \"force\": false, \"linenos\": false} -->\n\n````default\n\n   {\n       \"\
+      private_key_pfx_path\": \"/path/to/your.pfx\",\n       \"passphrase\": \"Passphrase\
+      \ if the private_key is encrypted (Optional)\",\n   }\n   ````\n\nThe following\
+      \ command will generate a .pfx file from your .key and .pem file:\n\n<!-- literal_block\
+      \ {\"ids\": [], \"classes\": [], \"names\": [], \"dupnames\": [], \"backrefs\"\
+      : [], \"xml:space\": \"preserve\", \"language\": \"default\", \"force\": false,\
+      \ \"linenos\": false} -->\n\n````default\n\n   openssl pkcs12 -export -out certificate.pfx\
+      \ -inkey privateKey.key -in certificate.pem\n   ````\n\n\n\n## Support Subject\
+      \ Name/Issuer Auth with a cert in .pfx*Added in version 1.30.0*:\nIf your .pfx\
+      \ file contains both the private key and public cert,\nyou can opt in for Subject\
+      \ Name/Issuer Auth like this:\n\n<!-- literal_block {\"ids\": [], \"classes\"\
       : [], \"names\": [], \"dupnames\": [], \"backrefs\": [], \"xml:space\": \"preserve\"\
       , \"language\": \"default\", \"force\": false, \"linenos\": false} -->\n\n````default\n\
-      \n   {\n       \"client_assertion\": \"...a JWT with claims aud, exp, iss, jti,\
-      \ nbf, and sub...\"\n   }\n   ````"
+      \n   {\n       \"private_key_pfx_path\": \"/path/to/your.pfx\",\n       \"public_certificate\"\
+      : True,\n       \"passphrase\": \"Passphrase if the private_key is encrypted\
+      \ (Optional)\",\n   }\n   ````"
     defaultValue: None
     types:
-    - <xref:typing.Union>[<xref:str>, <xref:dict>]
+    - <xref:typing.Union>[<xref:dict>, <xref:str>, <xref:None>]
   - name: client_claims
     description: "*Added in version 0.5.0*:\nIt is a dictionary of extra claims that\
       \ would be signed by\nby this <xref:msal.application.ConfidentialClientApplication>\
@@ -173,11 +203,15 @@ constructor:
 
       For example, if client is capable to handle *claims challenge*,
 
-      STS can then issue CAE access tokens to resources
+      STS may issue
 
-      knowing when the resource emits *claims challenge*
+      [Continuous Access Evaluation (CAE)](https://learn.microsoft.com/entra/identity/conditional-access/concept-continuous-access-evaluation)
 
-      the client will be capable to handle.
+      access tokens to resources,
+
+      knowing that when the resource emits a *claims challenge*
+
+      the client will be able to handle those challenges.
 
 
       Implementation details:
@@ -197,14 +231,15 @@ constructor:
   - name: azure_region
     description: "(optional)\nInstructs MSAL to use the Entra regional token service.\
       \ This legacy feature is only available to\nfirst-party applications. Only `acquire_token_for_client()`\
-      \ is supported.\n\nSupports 3 values:\n\n   `azure_region=None` - meaning no\
-      \ region is used. This is the default value.\n   `azure_region=\"some_region\"\
-      ` - meaning the specified region is used.\n   `azure_region=True` - meaning\
-      \ MSAL will try to auto-detect the region. This is not recommended.\n\n\n> [!NOTE]\n\
-      > Region auto-discovery has been tested on VMs and on Azure Functions. It is\
-      \ unreliable.\n>\n> Applications using this option should configure a short\
-      \ timeout.\n>\n> \n>\n> For more details and for the values of the region string\n\
-      >\n> \n>\n> see [https://learn.microsoft.com/entra/msal/dotnet/resources/region-discovery-troubleshooting](https://learn.microsoft.com/entra/msal/dotnet/resources/region-discovery-troubleshooting)\n\
+      \ is supported.\n\nSupports 4 values:\n\n1. `azure_region=None` - This default\
+      \ value means no region is configured. MSAL will use the region defined in env\
+      \ var `MSAL_FORCE_REGION`. \n\n2. `azure_region=\"some_region\"` - meaning the\
+      \ specified region is used. \n\n3. `azure_region=True` - meaning MSAL will try\
+      \ to auto-detect the region. This is not recommended. \n\n4. `azure_region=False`\
+      \ - meaning MSAL will use no region. \n\n\n> [!NOTE]\n> Region auto-discovery\
+      \ has been tested on VMs and on Azure Functions. It is unreliable.\n>\n> Applications\
+      \ using this option should configure a short timeout.\n>\n> \n>\n> For more\
+      \ details and for the values of the region string\n>\n> \n>\n> see [https://learn.microsoft.com/entra/msal/dotnet/resources/region-discovery-troubleshooting](https://learn.microsoft.com/entra/msal/dotnet/resources/region-discovery-troubleshooting)\n\
       >\n\nNew in version 1.12.0."
     defaultValue: None
     types:
@@ -298,6 +333,22 @@ constructor:
     defaultValue: None
     types:
     - <xref:boolean>
+  - name: oidc_authority
+    description: '*Added in version 1.28.0*:
+
+      It is a URL that identifies an OpenID Connect (OIDC) authority of
+
+      the format `https://contoso.com/tenant`.
+
+      MSAL will append ".well-known/openid-configuration" to the authority
+
+      and retrieve the OIDC metadata from there, to figure out the endpoints.
+
+
+      Note: Broker will NOT be used for OIDC authority.'
+    defaultValue: None
+    types:
+    - <xref:str>
 methods:
 - uid: msal.application.ClientApplication.acquire_token_by_auth_code_flow
   name: acquire_token_by_auth_code_flow
@@ -338,7 +389,7 @@ methods:
 
       changes are in the scopes.
 
-      In AAD, tokens can be issued for multiple 3rd party resources.
+      In Microsoft Entra, tokens can be issued for multiple 3rd party resources.
 
       You can ask authorization code for multiple resources,
 
@@ -396,7 +447,7 @@ methods:
 
       changes are in the scopes.
 
-      In AAD, tokens can be issued for multiple 3rd party resources.
+      In Microsoft Entra, tokens can be issued for multiple 3rd party resources.
 
       You can ask authorization code for multiple resources,
 
@@ -432,9 +483,9 @@ methods:
   - name: redirect_uri
     defaultValue: None
   return:
-    description: "A dict representing the json response from AAD:\n\n* A successful\
-      \ response would contain \"access_token\" key, \n\n* an error response would\
-      \ contain \"error\" and usually \"error_description\"."
+    description: "A dict representing the json response from Microsoft Entra:\n\n\
+      * A successful response would contain \"access_token\" key, \n\n* an error response\
+      \ would contain \"error\" and usually \"error_description\"."
 - uid: msal.application.ClientApplication.acquire_token_by_refresh_token
   name: acquire_token_by_refresh_token
   summary: 'Acquire token(s) based on a refresh token (RT) obtained from elsewhere.
@@ -522,9 +573,9 @@ methods:
     types:
     - <xref:object>
   return:
-    description: "A dict representing the json response from AAD:\n\n* A successful\
-      \ response would contain \"access_token\" key, \n\n* an error response would\
-      \ contain \"error\" and usually \"error_description\"."
+    description: "A dict representing the json response from Microsoft Entra:\n\n\
+      * A successful response would contain \"access_token\" key, \n\n* an error response\
+      \ would contain \"error\" and usually \"error_description\"."
 - uid: msal.application.ClientApplication.acquire_token_silent
   name: acquire_token_silent
   summary: 'Acquire an access token for given account, without user interaction.
@@ -908,6 +959,9 @@ attributes:
 - uid: msal.application.ClientApplication.ATTEMPT_REGION_DISCOVERY
   name: ATTEMPT_REGION_DISCOVERY
   signature: ATTEMPT_REGION_DISCOVERY = True
+- uid: msal.application.ClientApplication.DISABLE_MSAL_FORCE_REGION
+  name: DISABLE_MSAL_FORCE_REGION
+  signature: DISABLE_MSAL_FORCE_REGION = False
 - uid: msal.application.ClientApplication.GET_ACCOUNTS_ID
   name: GET_ACCOUNTS_ID
   signature: GET_ACCOUNTS_ID = '902'

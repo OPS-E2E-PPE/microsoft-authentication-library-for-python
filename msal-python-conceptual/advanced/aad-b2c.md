@@ -99,17 +99,17 @@ You would just need to update your HTML template to include new link to, for exa
 
 ## Resource Owner Password Credentials (ROPC) With B2C
 
-There is still no API difference here between B2C and non-B2C scenario.
-The following content serves as a mini-tutorial.
+There exists no API difference between a B2C and non-B2C scenario. The following content serves as a mini-tutorial.
 
-* In your AzureAD B2C tenant, create a new user flow and select **Sign in using ROPC**.
+* In your Azure AD B2C tenant, create a new user flow and select **Sign in using ROPC**.
 This will enable the ROPC user flow for your tenant.
 See [Configure the resource owner password credentials flow](/azure/active-directory-b2c/configure-ropc) for more details.
 * Once you create the MSAL instance with the authority which contains the ROPC user flow,
 the [`acquire_token_by_username_password(...)`](https://msal-python.readthedocs.io/en/latest/#msal.PublicClientApplication.acquire_token_by_username_password)
 would work as usual.
 * Limitations: This **only works for local accounts** (where you register with B2C using an email or username). This flow does not work if federating to any of the IdPs supported by B2C (Facebook, Google, etc...).
-* Normal caveats on ROPC flow still applies. Please see this [wiki page](https://github.com/AzureAD/microsoft-authentication-library-for-python/wiki/Username-Password-Authentication).
+
+Microsoft [discourages the use of resource owner password credentials grant](https://news.microsoft.com/features/whats-solution-growing-problem-passwords-says-microsoft/). In most scenarios, more secure alternatives are available and recommended. This flow requires a very high degree of trust in the application, and carries risks that are not present in other flows. You should only use this flow when other more secure flows aren't viable. Learn more in the [username and password ](username-password-authentication.md) guidance.
 
 ## Caching with B2C in MSAL Python
 

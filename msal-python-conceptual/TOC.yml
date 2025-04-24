@@ -11,6 +11,8 @@
   items:
   - name: Using MSAL Python with Web Account Manager
     href: advanced/wam.md
+  - name: Using MSAL Python with Authentication Brokers on macOS
+    href: advanced/macos-broker.md
   - name: Migrate to MSAL Python
     href: advanced/migrate-python-adal-msal.md
   - name: Logging
@@ -25,7 +27,8 @@
     href: advanced/aad-b2c.md
   - name: Active Directory Federation Services (ADFS) Support
     href: advanced/msal-python-adfs-support.md
-  - name: National clouds
+  - name: Using Managed Identity
+    href: advanced/managed-identity.md
   - name: Username and password authentication
     href: advanced/username-password-authentication.md
   - name: How to generate secret and/or certificate for Confidential Client

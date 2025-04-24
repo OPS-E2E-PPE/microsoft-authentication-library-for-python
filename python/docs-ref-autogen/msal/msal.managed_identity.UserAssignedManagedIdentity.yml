@@ -1,0 +1,21 @@
+### YamlMime:PythonClass
+uid: msal.managed_identity.UserAssignedManagedIdentity
+name: UserAssignedManagedIdentity
+fullName: msal.managed_identity.UserAssignedManagedIdentity
+module: msal.managed_identity
+summary: "Represent a user-assigned managed identity.\n\nDepends on the id you provided,\
+  \ the outcome is equivalent to one of the below:\n\n<!-- literal_block {\"ids\"\
+  : [], \"classes\": [], \"names\": [], \"dupnames\": [], \"backrefs\": [], \"xml:space\"\
+  : \"preserve\", \"language\": \"default\", \"force\": false, \"linenos\": false}\
+  \ -->\n\n````default\n\n   {\"ManagedIdentityIdType\": \"ClientId\", \"Id\": \"\
+  foo\"}\n   {\"ManagedIdentityIdType\": \"ResourceId\", \"Id\": \"foo\"}\n   {\"\
+  ManagedIdentityIdType\": \"ObjectId\", \"Id\": \"foo\"}\n   ````"
+constructor:
+  syntax: UserAssignedManagedIdentity(*, client_id=None, resource_id=None, object_id=None)
+  keywordOnlyParameters:
+  - name: client_id
+    defaultValue: None
+  - name: resource_id
+    defaultValue: None
+  - name: object_id
+    defaultValue: None
