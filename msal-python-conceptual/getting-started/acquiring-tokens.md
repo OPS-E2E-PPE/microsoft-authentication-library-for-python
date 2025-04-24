@@ -6,7 +6,7 @@ manager: CelesteDG
 ms.service: msal
 ms.subservice: msal-python
 ms.topic: conceptual
-ms.date: 03/06/2024
+ms.date: 04/24/2025
 ms.author: shermanouko
 ms.reviewer: dmwendia, rayluo
 # zone_pivot_groups: msal-python-acquire-token
@@ -42,9 +42,9 @@ There are several authentication flows that can be used to acquire tokens with M
 
 MSAL Python supports both interactive and silent token acquisition. Interactive token acquisition requires user interaction, while silent token acquisition doesn't. Public clients generally require user interaction while confidential clients rely on pre-provisioned credentials, like certificates and secrets.
 
-Use the [`acquire_token_silent_with_error`](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-silent-with-error) method to silently acquire a token. This method finds a valid access token from cache, or a valid refresh token from cache and then automatically uses it to redeem a new access token. If neither is true, you need to use an interactive method to acquire the token.
+Use the [*acquire_token_silent_with_error*](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-silent-with-error) method to silently acquire a token. This method finds a valid access token from cache, or a valid refresh token from cache and then automatically uses it to redeem a new access token. If neither is true, you need to use an interactive method to acquire the token.
 
-If your app doesn't care about the exact token refresh error during token cache look-up, then the [`acquire_token_silent`](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-silent) method is recommended.
+If your app doesn't care about the exact token refresh error during token cache look-up, then the [*acquire_token_silent*](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-silent) method is recommended.
 
 An example usage of this method is as shown in the following code snippet.
 
@@ -72,13 +72,13 @@ Several methods are available for interactive token acquisition. The method to u
 
 ## Public clients interactive token acquisition
 
-Public client applications can't securely store a secret and can only authenticate the user that is interacting with the product. MSAL Python exposes the token acquisition logic for public applications through [`PublicClientApplication`](xref:msal.application.PublicClientApplication). The following are the different methods available for public client applications to acquire tokens.
+Public client applications can't securely store a secret and can only authenticate the user that is interacting with the product. MSAL Python exposes the token acquisition logic for public applications through [*PublicClientApplication*](xref:msal.application.PublicClientApplication). The following are the different methods available for public client applications to acquire tokens.
 
 ### Device code flow
 
 [Device code flow](/entra/identity-platform/v2-oauth2-device-code) is used to acquire tokens in applications that run on devices that don't have access to a web browser. These are applications are known as headless applications. This flow provides the user with a URL and a code. The user goes to a web browser on another device, enters the code and signs in. On successful authentication, Microsoft Entra returns a token to the browser-less device.
 
-First, you call the [`initiate_device_flow`](/python/api/msal/msal.application.publicclientapplication#msal-application-publicclientapplication-initiate-device-flow) method.
+First, you call the [*initiate_device_flow*](/python/api/msal/msal.application.publicclientapplication#msal-application-publicclientapplication-initiate-device-flow) method.
 
 ```python
 flow = app.initiate_device_flow(scopes=config["scope"])
@@ -93,7 +93,7 @@ sys.stdout.flush()  # Some terminal needs this to ensure the message is shown
 # input("Press Enter after signing in from another device to proceed, CTRL+C to abort.")
 ```
 
-You then pass the flow dictionary object to the [`acquire_token_by_device_flow`](/python/api/msal/msal.application.publicclientapplication#msal-application-publicclientapplication-acquire-token-by-device-flow) method to get the token. By default, this method blocks the current thread. You can follow [these instructions](/python/api/msal/msal.application.publicclientapplication#msal-application-publicclientapplication-acquire-token-by-device-flow) to shorten the block time or you can even turn off the blocking behavior and then keep calling `acquire_token_by_device_flow` in your own customized loop.
+You then pass the flow dictionary object to the [*acquire_token_by_device_flow*](/python/api/msal/msal.application.publicclientapplication#msal-application-publicclientapplication-acquire-token-by-device-flow) method to get the token. By default, this method blocks the current thread. You can follow [these instructions](/python/api/msal/msal.application.publicclientapplication#msal-application-publicclientapplication-acquire-token-by-device-flow) to shorten the block time or you can even turn off the blocking behavior and then keep calling *acquire_token_by_device_flow* in your own customized loop.
 
 ```python
 result = app.acquire_token_by_device_flow(flow)
@@ -108,7 +108,7 @@ A successful response a dictionary with an `access_token` key.
 
 ### Acquire token interactive
 
-MSAL Python also offers the ability for public client apps (Desktops and Mobile) to acquire tokens as the user. The user signs in through the authorization request URL via a web browser. Set the redirect URI of your app to `http://localhost` in the Microsoft Entra admin center for your app registration. If you opt in to [use broker](../advanced/wam.md) during `PublicClientApplication` creation, your app also needs to register `ms-appx-web://Microsoft.AAD.BrokerPlugin/YOUR_CLIENT_ID` as a redirect URI.
+MSAL Python also offers the ability for public client apps (Desktops and Mobile) to acquire tokens as the user. The user signs in through the authorization request URL via a web browser. Set the redirect URI of your app to `http://localhost` in the Microsoft Entra admin center for your app registration. If you opt in to [use broker](../advanced/wam.md) during *PublicClientApplication* creation, your app also needs to register `ms-appx-web://Microsoft.AAD.BrokerPlugin/YOUR_CLIENT_ID` as a redirect URI.
 
 ```python
 result = app.acquire_token_interactive(  # It automatically provides PKCE protection
@@ -122,7 +122,7 @@ else:
 
 ### Username and password
 
-It's also possible (but not recommended) to get a token with a [username and password](/entra/identity-platform/v2-oauth-ropc). MSAL Python provides the [`acquire_token_by_username_password`](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-by-username-password) method for this use case. It's not recommended because the application will be asking a user for their password directly, which is an insecure pattern.
+We don't recommend using this approach. It's also possible to get a token with a [username and password](/entra/identity-platform/v2-oauth-ropc). MSAL Python provides the [*acquire_token_by_username_password*](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-by-username-password) method for this use case. It's not recommended because the application will be asking a user for their password directly, which is an insecure pattern.
 
 ```python
 result = app.acquire_token_by_username_password(
@@ -136,11 +136,11 @@ else:
 
 ## Confidential clients interactive token acquisition
 
-Confidential client applications can securely store a secret and can authenticate both on behalf of an application as well as on behalf of a given user. MSAL Python gives developers various methods to acquire tokens when developing [`ConfidentialClientApplication`](xref:msal.application.ConfidentialClientApplication).
+Confidential client applications can securely store a secret and can authenticate both on behalf of an application as well as on behalf of a given user. MSAL Python gives developers various methods to acquire tokens when developing [*ConfidentialClientApplication*](xref:msal.application.ConfidentialClientApplication).
 
 ### Acquire token for client
 
-Acquire token as the application itself using [client credentials](/entra/identity-platform/v2-oauth2-client-creds-grant-flow), and not for a user. For example, this can be used in applications that process users in batches and not one particular user, such as syncing tools. MSAL Python provides the [`acquire_token_for_client`](/python/api/msal/msal.application.confidentialclientapplication#msal-application-confidentialclientapplication-acquire-token-for-client) method to do this. Since MSAL Python 1.23, this method automatically looks for token from cache, and only sends request to identity provider when cache misses.
+Acquire token as the application itself using [client credentials](/entra/identity-platform/v2-oauth2-client-creds-grant-flow), and not for a user. For example, this can be used in applications that process users in batches and not one particular user, such as syncing tools. MSAL Python provides the [*acquire_token_for_client*](/python/api/msal/msal.application.confidentialclientapplication#msal-application-confidentialclientapplication-acquire-token-for-client) method to do this. Since MSAL Python 1.23, this method automatically looks for token from cache, and only sends request to identity provider when cache misses.
 
 ```python
 result = app.acquire_token_for_client(scopes=config["scope"])
@@ -153,9 +153,9 @@ else:
 
 ### Acquire token on behalf of
 
-In the case of web apps or web APIs calling another downstream Web API in the name of the user, use the [On Behalf Of flow](/entra/identity-platform/v2-oauth2-on-behalf-of-flow) to acquire a token based on a user assertion (for example, SAML, JWT). The current app is a middle-tier service that was called with a token representing an end user. The current app can use such token, also known as a user assertion, to request another token to access downstream web API on behalf of that user. The middle-tier app has no user interaction to obtain consent. For information on gaining consent upfront for your middle-tier app, see the [documentation](/entra/identity-platform/v2-oauth2-on-behalf-of-flow#gaining-consent-for-the-middle-tier-application).
+In the case of web apps or web APIs calling another downstream Web API in the name of the user, use the [On Behalf Of flow](/entra/identity-platform/v2-oauth2-on-behalf-of-flow) to acquire a token based on a user assertion. For example, SAML and JWT. The current app is a middle-tier service that was called with a token representing an end user. The current app can use such token, also known as a user assertion, to request another token to access downstream web API on behalf of that user. The middle-tier app has no user interaction to obtain consent. For information on gaining consent upfront for your middle-tier app, see the [documentation](/entra/identity-platform/v2-oauth2-on-behalf-of-flow#gaining-consent-for-the-middle-tier-application).
 
-Here's an example of code that acquires an access token using the [`acquire_token_on_behalf_of`](/python/api/msal/msal.application.confidentialclientapplication#msal-application-confidentialclientapplication-acquire-token-on-behalf-of) method.
+Here's an example of code that acquires an access token using the [*acquire_token_on_behalf_of*](/python/api/msal/msal.application.confidentialclientapplication#msal-application-confidentialclientapplication-acquire-token-on-behalf-of) method.
 
 ```python
 def get(self, request): # a web service endpoint receiving a request
@@ -181,11 +181,11 @@ def get(self, request): # a web service endpoint receiving a request
         print(result.get("error")) 
 ```
 
-## Acquire token by authorization code flow
+### Acquire token by authorization code flow
 
 For web apps authenticating in the name of a user, acquire tokens through [authorization code](/entra/identity-platform/v2-oauth2-auth-code-flow) after letting the user sign-in through the authorization request URL. This is typically the mechanism used by an application that lets the user sign-in and access web APIs for this particular user.
 
-You'll first need to initiate auth code flow using the [`initiate_auth_code_flow`](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-initiate-auth-code-flow). This method takes in among other parameters a redirect URI and state string. The value of the state parameter is also included in token response. If this value is absent, MSAL Python will automatically generate one internally. The redirect URI provided must match the redirect URI registered in the Microsoft Entra admin center. This method returns the auth code flow that is a dictionary containing auth_uri and a state. The auth_uri is the URL that the user needs to visit to sign in.
+You'll first need to initiate auth code flow using the [*initiate_auth_code_flow*](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-initiate-auth-code-flow). This method takes in among other parameters a redirect URI and state string. The value of the state parameter is also included in token response. If this value is absent, MSAL Python will automatically generate one internally. The redirect URI provided must match the redirect URI registered in the Microsoft Entra admin center. This method returns the auth code flow that is a dictionary containing *auth_uri* and *state*. The *auth_uri* is the URL that the user needs to visit to sign in.
 
 ```python
 flow = app.initiate_auth_code_flow(
@@ -200,7 +200,7 @@ session["auth_flow"] = flow
 # At this point, the app should guide the user to visit the auth ur (session["auth_flow"]["auth_uri"])
 ```
 
-The response from visiting the auth_uri endpoints is used in the [`acquire_token_by_auth_code_flow`](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-by-auth-code-flow) method. The state is a unique identifier that you can use to verify the response from the authorization server. The user should consent to scopes during sign-in.
+The response from visiting the auth uri endpoints is used in the [*acquire_token_by_auth_code_flow*](/python/api/msal/msal.application.clientapplication#msal-application-clientapplication-acquire-token-by-auth-code-flow) method. The state is a unique identifier that you can use to verify the response from the authorization server. The user should consent to scopes during sign-in.
 
 ```python
 # The uth_response value from visiting the auth_uri endpoint is passed as a query string
@@ -218,6 +218,6 @@ except ValueError:  # Usually caused by CSRF
 
 ## MSAL Python token caching
 
-Both public and confidential client applications support token caching, handled direct by MSAL Python. Applications should try to get a token from the cache first before relying on any other means. Take a look at the [recommended token acquisition pattern](/azure/active-directory/develop/scenario-desktop-acquire-token?tabs=python) to learn more.
+Both public and confidential client applications support token caching, handled direct by MSAL Python. Applications should try to get a token from the cache first before relying on any other means. For more information, see [recommended token acquisition pattern](/azure/active-directory/develop/scenario-desktop-acquire-token?tabs=python).
 
 To be able to persist the cache, the developers need to configure the [token cache serialization](/azure/active-directory/develop/msal-python-token-cache-serialization) logic.
