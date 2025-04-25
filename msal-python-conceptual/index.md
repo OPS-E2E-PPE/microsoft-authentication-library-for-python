@@ -58,7 +58,7 @@ After determining whether your application is a public or confidential client ap
 
 Acquiring tokens with MSAL Python follows a three-step pattern. There will be some variations for different flows. If you would like to see them in action, download our [samples](https://github.com/AzureAD/microsoft-authentication-library-for-python/tree/dev/sample).
 
-1. MSAL relies on a clean separation between public client and confidential client applications. Therefore, create either a [*PublicClientApplication*](xref:msal.application.PublicClientApplication) or a [*ConfidentialClientApplication*](xref:msal.application.ConfidentialClientApplication) instance and reuse it during the lifecycle of your application. For example, for a public client application, the initialization code might look like this:
+1. MSAL relies on a clean separation between public client and confidential client applications. Therefore, create either a [`PublicClientApplication`](xref:msal.application.PublicClientApplication) or a [`ConfidentialClientApplication`](xref:msal.application.ConfidentialClientApplication) instance and reuse it during the lifecycle of your application. For example, for a public client application, the initialization code might look like this:
 
     ```python
     from msal import PublicClientApplication
@@ -90,7 +90,7 @@ Acquiring tokens with MSAL Python follows a three-step pattern. There will be so
         result = app.acquire_token_silent(["User.Read"], account=chosen)
     ```
 
-1. If there's no suitable token in the cache or you chose to skip the previous step, send a request to Microsoft Entra ID to get a token. There are different methods based on your client type and scenario, but for the purposes of the example we're showing how to use [*acquire_token_interactive*](xref:msal.application.PublicClientApplication.acquire_token_interactive), which prompts the user to provide their credentials.
+1. If there's no suitable token in the cache or you chose to skip the previous step, send a request to Microsoft Entra ID to get a token. There are different methods based on your client type and scenario, but for the purposes of the example we're showing how to use [`acquire_token_interactive`](xref:msal.application.PublicClientApplication.acquire_token_interactive), which prompts the user to provide their credentials.
 
    ```python
    if not result:

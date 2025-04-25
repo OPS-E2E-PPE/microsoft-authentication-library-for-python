@@ -28,7 +28,7 @@ pip install msal[broker]>=1.20,<2
 
 If broker-related packages aren't installed and you try to use the authentication broker, you will get the error *ImportError: You need to install dependency by: pip install "msal[broker]>=1.20,<2"*.
 
-Next, instantiate a new [*PublicClientApplication*](xref:msal.application.PublicClientApplication) and set *enable_broker_on_windows* to `True`. This will ensure that MSAL will try and communicate with WAM instead of popping up a new browser window. If you are writing a cross-platform application, you will also need to use *enable_broker_on_mac*, as outlined in the [Using MSAL Python with an Authentication Broker on macOS](macos-broker.md) article.
+Next, instantiate a new [`PublicClientApplication`](xref:msal.application.PublicClientApplication) and set `enable_broker_on_windows` to `True`. This will ensure that MSAL will try and communicate with WAM instead of popping up a new browser window. If you are writing a cross-platform application, you will also need to use `enable_broker_on_mac`, as outlined in the [Using MSAL Python with an Authentication Broker on macOS](macos-broker.md) article.
 
 ```python
 from msal import PublicClientApplication
@@ -39,7 +39,7 @@ app = PublicClientApplication(
     enable_broker_on_windows=True)
 ```
 
-You can now acquire a token by calling [*acquire_token_interactive*](xref:msal.application.PublicClientApplication.acquire_token_interactive) and specifying a parent window handle through *parent_window_handle*:
+You can now acquire a token by calling [`acquire_token_interactive`](xref:msal.application.PublicClientApplication.acquire_token_interactive) and specifying a parent window handle through *parent_window_handle*:
 
 ```python
 result = app.acquire_token_interactive(["User.ReadBasic.All"],
@@ -48,7 +48,7 @@ result = app.acquire_token_interactive(["User.ReadBasic.All"],
 
 A parent window handle is required by WAM to ensure that the dialog is shown correctly on top of the requesting window. MSAL doesn't infer this directly due to the fact that there are many variables that might influence what window WAM needs to bind to, and developers building applications are best suited to decide what window that should be.
 
-For console applications, MSAL makes it easy by offering an out-of-the-box solution to getting the window handle for the terminal - [*CONSOLE_WINDOW_HANDLE*](xref:msal.application.PublicClientApplication.CONSOLE_WINDOW_HANDLE). For desktop applications, more work with the Windows API might be required to [get the window handle](/windows/apps/develop/ui-input/retrieve-hwnd). Helper packages, like [pywin32](https://pypi.org/project/pywin32/) can help with API calls.
+For console applications, MSAL makes it easy by offering an out-of-the-box solution to getting the window handle for the terminal - [`CONSOLE_WINDOW_HANDLE`](xref:msal.application.PublicClientApplication.CONSOLE_WINDOW_HANDLE). For desktop applications, more work with the Windows API might be required to [get the window handle](/windows/apps/develop/ui-input/retrieve-hwnd). Helper packages, like [pywin32](https://pypi.org/project/pywin32/) can help with API calls.
 
 Before executing your application, make sure that you configure the redirect URL for the desktop app:
 
