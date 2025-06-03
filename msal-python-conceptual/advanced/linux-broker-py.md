@@ -151,12 +151,12 @@ sudo dnf install python3 python3-pip -y
 To use the broker, you will need to install the broker-related packages in addition to the core MSAL from PyPI:
 
 ```python
-#pip install msal[broker]>=1.31,<2
-pip install https://github.com/AzureAD/microsoft-authentication-library-for-python/archive/refs/heads/dev.zip 
+pip install msal[broker]>=1.31,<2
 pip install pymsalruntime
 ```
 
-### Once configured, you can call `acquire_token_interactive` to acquire a token.
+### Create Project
+Once configured, you can call `acquire_token_interactive` to acquire a token.
 
 ```python
 import sys  # For simplicity, we'll read config file from 1st CLI param sys.argv[1]
@@ -169,10 +169,10 @@ import msal
 # logging.basicConfig(level=logging.DEBUG)
 
 var_authority = "https://login.microsoftonline.com/common"
-var_client_id = "4b0db8c2-9f26-4417-8bde-3f0e3656f8e0"
-var_username = "idlab@msidlab4.onmicrosoft.com"
+var_client_id = "your-client-id-here"  # Replace with your app's client ID
+var_username = "your-username-here"  # Replace with your username, e.g., "
 var_scope = ["User.ReadBasic.All"]
-var_endpoint = "https://graph.microsoft.com/v1.0/users"
+# Removed unused variable to avoid confusion
 
 
 # Create a preferably long-lived app instance which maintains a token cache (Default cache is in memory only).

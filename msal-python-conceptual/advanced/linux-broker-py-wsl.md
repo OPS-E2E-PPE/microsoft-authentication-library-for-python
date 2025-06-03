@@ -8,7 +8,7 @@ ms.topic: how-to
 ms.date: 05/08/2025
 ---
 
-## Enable SSO in WSL (Windows Subsystem for Linux) apps using MSAL Python and WAM
+# Enable SSO in WSL (Windows Subsystem for Linux) apps using MSAL Python and WAM
 
 MSAL is able to call the Microsoft Single Sign-on to Linux, a Linux component that is shipped independent of the Linux Distribution, however it gets installed using a package manager using `sudo apt install microsoft-identity-broker` or `sudo dnf install microsoft-identity-broker`.
 
@@ -110,8 +110,7 @@ Reference the [Enable SSO in native Linux apps using MSAL Python](./linux-broker
 To use the broker, you will need to install the broker-related packages in addition to the core MSAL from PyPI:
 
 ```python
-#pip install msal[broker]>=1.31,<2
-pip install https://github.com/AzureAD/microsoft-authentication-library-for-python/archive/refs/heads/dev.zip 
+pip install msal[broker]>=1.31,<2
 pip install pymsalruntime
 ```
 
