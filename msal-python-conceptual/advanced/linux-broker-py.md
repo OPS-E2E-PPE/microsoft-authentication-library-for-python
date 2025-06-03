@@ -40,7 +40,7 @@ An authentication broker is an application that runs on a user’s machine that 
 | enable_broker_on_mac     | Mac with Company Portal installed | msauth.com.msauth.unsignedapp://auth                                             |
 | enable_broker_on_linux   | Linux with Intune installed       | `https://login.microsoftonline.com/common/oauth2/nativeclient` (MUST be enabled) |
 
-2. As shown in the table above, your application needs to support broker-specific redirect URIs. For Linux, the URL must be:
+2. Your application needs to support broker-specific redirect URIs. For `Linux` specifically, the URL for the redirect URI must be:
 
     ```text
     https://login.microsoftonline.com/common/oauth2/nativeclient
@@ -50,6 +50,7 @@ An authentication broker is an application that runs on a user’s machine that 
 
     ```python
     pip install msal[broker]>=1.31,<2
+    pip install pymsalruntime
     ```
 
 4. Once configured, you can call `acquire_token_interactive` to acquire a token.
@@ -69,7 +70,19 @@ The following parameters are available to configure broker support in MSAL Pytho
 | enable_broker_on_wsl | `boolean` | This setting is only effective if your app is running on WSL. This parameter defaults to None, which means MSAL will not utilize a broker. </br></br>`New in MSAL Python 1.25.0`. |
 | enable_broker_on_mac | `boolean` | This setting is only effective if your app is running on Mac with Company Portal installed. This parameter defaults to None, which means MSAL will not utilize a broker. </br></br>`New in MSAL Python 1.31.0`.|
 | enable_broker_on_linux | `boolean` | This setting is only effective if your app is running on Linux with Intune installed. This parameter defaults to None, which means MSAL will not utilize a broker. </br></br>`New in MSAL Python 1.33.0`. |
-| parent_window_handle | `int` | <i>OPTIONAL</i></br> - If your app does not opt in to use broker, you do not need to provide a parent_window_handle here.</br>- If your app opts in to use broker, parent_window_handle is required.</br>If your app is a GUI app running on Windows or Mac system, you are required to also provide its window handle, so that the sign-in window will pop up on top of your window.</br>- If your app is a console app running on Windows or Mac system, you can use a placeholder `PublicClientApplication.CONSOLE_WINDOW_HANDLE`|
+| parent_window_handle | `int` | <i>OPTIONAL</i></br></br>
+
+### Notes regarding parent_window_handle
+
+The `parent_window_handle` parameter is required even though on Linux it is not used. For GUI applications, the login prompt location will be determined ad-hoc and currently cannot be bound to a specific window. In a future update, this parameter will be used to determine the _actual_ parent window.
+
+| Condition | Description |
+|---|---|
+|App does not want to utilize a broker|no need to specify a parent_window_handle|
+|App opts to use a broker|parent_window_handle is required|
+|App is a GUI app running on Windows or Mac system|required to provide its window handle, so that the sign-in window will pop up on top of your window|
+|App is a console app running on Windows or Mac system|can use a placeholder `PublicClientApplication.CONSOLE_WINDOW_HANDLE`|
+|App is intended to be a cross-platform application| App needs to use `enable_broker_on_windows`, as outlined in the [Using MSAL Python with Web Account Manager](wam.md) article.|
 
 ## The fallback behaviors of MSAL Python’s broker support
 
@@ -86,12 +99,112 @@ MSAL will either error out, or silently fallback to non-broker flows.
 >[!IMPORTANT]
 >If broker-related packages are not installed and you will try to use the authentication broker, you will get an error: `ImportError: You need to install dependency by: pip install "msal[broker]>=1.31,<2"`.
 
->[!IMPORTANT]
->If you are writing a cross-platform application, you will also need to use `enable_broker_on_windows`, as outlined in the [Using MSAL Python with Web Account Manager](wam.md) article.
-
 >[!NOTE]
 >The `parent_window_handle` parameter is required even though on Linux it is not used. For GUI applications, the login prompt location will be determined ad-hoc and currently cannot be bound to a specific window. In a future update, this parameter will be used to determine the _actual_ parent window.
 
 ## Token caching
 
 The authentication broker handles refresh and access token caching. You do not need to set up custom caching.
+
+## Building an example app
+
+You can find a sample app that demonstrates how to use MSAL Python with the authentication broker on Linux in the [MSAL Python GitHub repository](https://github.com/AzureAD/microsoft-authentication-library-for-python/). The sample app is located in the `samples/console_app` directory and includes examples of how to use the broker for authentication.
+
+### **App Registration**
+
+Update your App registration in the Azure portal to include the broker-specific redirect URI for Linux:
+
+```text
+https://login.microsoftonline.com/common/oauth2/nativeclient
+```
+
+### **Linux Dependencies**
+
+First, check if you have python3 installed on your Linux distribution.
+
+```bash
+python3 --version
+```
+
+If not, install it using the package manager for your distribution.
+
+#### [Ubuntu](#tab/ubuntudep)
+
+To install on debian/Ubuntu based Linux distribution:
+
+```bash
+sudo apt install python3 python3-pip -y
+```
+
+#### [Red Hat Enterprise Linux](#tab/rheldep)
+
+To install on Red Hat/Fedora based Linux distribution:
+
+```bash
+sudo dnf install python3 python3-pip -y
+```
+
+---
+
+### **Python Dependencies**
+
+To use the broker, you will need to install the broker-related packages in addition to the core MSAL from PyPI:
+
+```python
+#pip install msal[broker]>=1.31,<2
+pip install https://github.com/AzureAD/microsoft-authentication-library-for-python/archive/refs/heads/dev.zip 
+pip install pymsalruntime
+```
+
+### Once configured, you can call `acquire_token_interactive` to acquire a token.
+
+```python
+import sys  # For simplicity, we'll read config file from 1st CLI param sys.argv[1]
+import json
+import logging
+import requests
+import msal
+
+# Optional logging
+# logging.basicConfig(level=logging.DEBUG)
+
+var_authority = "https://login.microsoftonline.com/common"
+var_client_id = "4b0db8c2-9f26-4417-8bde-3f0e3656f8e0"
+var_username = "idlab@msidlab4.onmicrosoft.com"
+var_scope = ["User.ReadBasic.All"]
+var_endpoint = "https://graph.microsoft.com/v1.0/users"
+
+
+# Create a preferably long-lived app instance which maintains a token cache (Default cache is in memory only).
+app = msal.PublicClientApplication(
+    var_client_id, 
+    authority=var_authority,
+    enable_broker_on_windows=True,
+    enable_broker_on_wsl=True
+    )
+
+# The pattern to acquire a token looks like this.
+result = None
+
+# Firstly, check the cache to see if this end user has signed in before
+accounts = app.get_accounts(username=var_username)
+if accounts:
+    logging.info("Account(s) exists in cache, probably with token too. Let's try.")
+    result = app.acquire_token_silent(var_scope, account=accounts[0])
+
+if not result:
+    logging.info("No suitable token exists in cache. Let's get a new one from AAD.")
+    
+    result = app.acquire_token_interactive(var_scope,parent_window_handle=app.CONSOLE_WINDOW_HANDLE)
+    
+if "access_token" in result:
+    print("Access token is: %s" % result['access_token'])
+
+else:
+    print(result.get("error"))
+    print(result.get("error_description"))
+    print(result.get("correlation_id"))  # You may need this when reporting a bug
+    if 65001 in result.get("error_codes", []):  # Not mean to be coded programatically, but...
+        # AAD requires user consent for U/P flow
+        print("Visit this to consent:", app.get_authorization_request_url(config["scope"]))
+```
