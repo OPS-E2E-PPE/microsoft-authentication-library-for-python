@@ -1,5 +1,5 @@
 ---
-title: Using MSAL Python with an Authentication Broker on Linux
+title: Using MSAL Python with an Auth Broker on Linux
 description: MSAL is able to call Microsoft Single Sign-on for Linux, which is a component that ships as a dependency of Intune Portal. This component acts as an authentication broker allowing the users of your app to benefit from integration with accounts known to the broker.
 author: ploegert
 ms.author: jploegert
