@@ -49,7 +49,7 @@ An authentication broker is an application that runs on a user’s machine that 
 1. To use the broker, you will need to install the broker-related packages in addition to the core MSAL from PyPI:
 
     ```python
-   pip install "msal[broker]>=1.33.0b1,<2"
+    pip install "msal[broker]>=1.33.0b1,<2"
     ```
     
 4. Once configured, you can call `acquire_token_interactive` to acquire a token.
