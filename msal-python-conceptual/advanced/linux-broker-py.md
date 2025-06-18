@@ -96,7 +96,11 @@ MSAL will either error out, or silently fallback to non-broker flows.
 4. MSAL errors out when broker is opted in, installed, initialized, but subsequent token request(s) failed.
 
 >[!IMPORTANT]
->If broker-related packages are not installed and you will try to use the authentication broker, you will get an error: `ImportError: You need to install dependency by: pip install "msal[broker]>=1.31,<2"`.
+>If broker-related packages are not installed and you will try to use the authentication broker, you will get an error: `ImportError: You need to install dependency by: pip install "msal[broker]>=1.xx,<2"`.
+
+<!--
+This one is an error message whose content happens to be changing based on platform. The doc shall just use a placeholder that is good enough.
+-->
 >[!NOTE]
 >The `parent_window_handle` parameter is required even though on Linux it is not used. For GUI applications, the login prompt location will be determined ad-hoc and currently cannot be bound to a specific window. In a future update, this parameter will be used to determine the _actual_ parent window.
 
