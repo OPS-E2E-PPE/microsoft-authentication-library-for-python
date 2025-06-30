@@ -15,6 +15,22 @@
       "base_path": "python",
       "site_name": "Docs",
       "template": "Python_basic"
+    },
+    {
+      "docset_name": "msal-python-conceptual",
+      "build_source_folder": "msal-python-conceptual",
+      "build_output_subfolder": "msal-python-conceptual",
+      "locale": "en-us",
+      "monikers": [],
+      "open_to_public_contributors": false,
+      "type_mapping": {
+        "Conceptual": "Content"
+      },
+      "build_entry_point": "docs",
+      "template_folder": "_themes",
+      "base_path": "python",
+      "site_name": "Docs",
+      "template": "Python_basic"
     }
   ],
   "notification_subscribers": [],
