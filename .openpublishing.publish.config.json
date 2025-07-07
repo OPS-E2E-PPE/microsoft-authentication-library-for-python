@@ -5,39 +5,16 @@
       "build_source_folder": "python",
       "build_output_subfolder": "microsoft-authentication-library-for-python",
       "locale": "en-us",
-      "monikers": [
-        "msal-py-latest"
-      ],
-      "moniker_ranges": [],
+      "monikers": [],
       "open_to_public_contributors": false,
       "type_mapping": {
-        "ZonePivotGroups": "Toc",
-        "Conceptual": "Content",
-        "ManagedReference": "Content",
-        "RestApi": "Content",
-        "UniversalReference": "Content",
-        "PythonEnum": "Content",
-        "PythonModule": "Content",
-        "PythonClass": "Content",
-        "PythonPackage": "Content",
-        "ReferenceContainer": "Content"
+        "Conceptual": "Content"
       },
       "build_entry_point": "docs",
       "template_folder": "_themes",
-      "customized_tasks": {
-        "docset_prebuild": [
-          "_dependentPackages/CommonPlugins/tools/JoinTOC.ps1"
-        ]
-      },
-      "dependent_packages": [
-        {
-          "id": "Microsoft.OpenPublishing.CommonPlugins",
-          "nuget_feed": "https://www.myget.org/F/op/api/v2",
-          "path_to_root": "_dependentPackages/CommonPlugins",
-          "target_framework": "net45",
-          "version": "latest"
-        }
-      ]
+      "base_path": "python",
+      "site_name": "Docs",
+      "template": "Python_basic"
     },
     {
       "docset_name": "msal-python-conceptual",
@@ -45,40 +22,20 @@
       "build_output_subfolder": "msal-python-conceptual",
       "locale": "en-us",
       "monikers": [],
-      "moniker_ranges": [],
-      "open_to_public_contributors": true,
-      "xref_query_tags": [
-        "/python"
-      ],
+      "open_to_public_contributors": false,
       "type_mapping": {
         "Conceptual": "Content"
       },
       "build_entry_point": "docs",
       "template_folder": "_themes",
-      "customized_tasks": {
-        "docset_prebuild": [
-          "_dependentPackages/CommonPlugins/tools/JoinTOC.ps1"
-        ]
-      }
+      "base_path": "python",
+      "site_name": "Docs",
+      "template": "Python_basic"
     }
   ],
   "notification_subscribers": [],
   "sync_notification_subscribers": [],
   "branches_to_filter": [],
-  "JoinTOCPlugin": [
-    {
-      "TopLevelTOC": "python/docs-ref-mapping/ref-toc.yml",
-      "ReferenceTOC": "python/docs-ref-autogen/toc.yml",
-      "ReferenceTOCUrl": "/python/api/msal_py_toc/toc.json?view=msal-py-latest",
-      "ConceptualTOC": "msal-python-conceptual/toc.yml",
-      "ConceptualTOCUrl": "/entra/msal/python/toc.json",
-      "ContainerPageMetadata": {
-        "langs": [
-          "python"
-        ]
-      }
-    }
-  ],
   "need_preview_pull_request": true,
   "dependent_repositories": [
     {
@@ -91,8 +48,5 @@
   "branch_target_mapping": {},
   "skip_source_output_uploading": false,
   "contribution_branch_mappings": {},
-  "need_generate_pdf_url_template": true,
-  "redirection_files": [
-    "redirections/.openpublishing.redirection.simplify-package-structure.json"
-  ]
+  "need_generate_pdf_url_template": false
 }
